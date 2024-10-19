@@ -21,4 +21,16 @@ data class Problem(
     val cycleLength = lcm(numberOfPlayers, playersPerRound) / playersPerRound
 
     fun averageMatchesPlayed(numberOfRounds: Int): Double = numberOfRounds * matchesPerRound * playersPerMatch / numberOfPlayers.toDouble()
+
+    fun averagePairs(numberOfRounds: Int): Double =
+        numberOfRounds.toDouble() / cycleLength * (cycleLength - 1) * (playersPerMatch - 1) / (numberOfPlayers - 1)
+
+    override fun toString() =
+        buildString {
+            appendLine("PROBLEM")
+            appendLine("Number of players: $numberOfPlayers")
+            appendLine("Number of rounds: $numberOfRounds")
+            appendLine("Number of players per match: $playersPerMatch")
+            appendLine("Average pair frequency after $numberOfRounds rounds: ${averagePairs(numberOfRounds)}")
+        }
 }
