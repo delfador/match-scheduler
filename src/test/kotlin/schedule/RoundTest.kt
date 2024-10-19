@@ -116,4 +116,19 @@ class RoundTest {
         assertThat(round1).isNotEqualTo(round2)
         assertThat(round1).isEqualTo(round3)
     }
+
+    @Test
+    fun `should create a copy`() {
+        val round = Round.regular(6, 4)
+        val roundCopy = round.copy()
+        assertThat(round).isEqualTo(roundCopy)
+    }
+
+    @Test
+    fun `copy should be a deep copy and have no side effects`() {
+        val round = Round.regular(6, 4)
+        val roundCopy = round.copy()
+        round.rotate(1)
+        assertThat(round).isNotEqualTo(roundCopy)
+    }
 }

@@ -51,6 +51,8 @@ class Round(
 
     override fun hashCode(): Int = players.hashCode()
 
+    fun copy(): Round = Round(players, playersPerMatch)
+
     companion object {
         fun regular(
             numberOfPlayers: Int,
