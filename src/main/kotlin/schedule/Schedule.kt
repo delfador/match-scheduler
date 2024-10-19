@@ -3,13 +3,6 @@ package org.ruud.schedule
 class Schedule(
     rounds: List<Round>,
 ) {
-    fun swapRounds(
-        i: Int,
-        j: Int,
-    ) {
-        _rounds[i] = _rounds[j].also { _rounds[j] = _rounds[i] }
-    }
-
     init {
         rounds.subList(1, rounds.size).forEach { round ->
             require(round.size == rounds.first().size) {
@@ -21,6 +14,19 @@ class Schedule(
         }
     }
 
-    private val _rounds = rounds.toMutableList()
+    private val _rounds = rounds.mapTo(mutableListOf()) { it.copy() }
     val rounds: List<Round> = _rounds
+
+    fun swapRounds(
+        i: Int,
+        j: Int,
+    ) {
+        _rounds[i] = _rounds[j].also { _rounds[j] = _rounds[i] }
+    }
+
+    fun copy(): Schedule = Schedule(_rounds)
+
+    override fun equals(other: Any?): Boolean = other is Schedule && _rounds == other._rounds
+
+    override fun hashCode(): Int = _rounds.hashCode()
 }
