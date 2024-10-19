@@ -1,7 +1,4 @@
-package org.ruud.score
-
-import org.ruud.schedule.Round
-import org.ruud.schedule.Schedule
+package org.ruud.schedule
 
 class RoundFrequency<T>(
     private val schedule: Schedule,

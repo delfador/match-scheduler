@@ -1,10 +1,10 @@
-package score
+package schedule
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.ruud.schedule.Round
+import org.ruud.schedule.RoundFrequency
 import org.ruud.schedule.Schedule
-import org.ruud.score.RoundFrequency
 
 class RoundFrequencyTest {
     private val rounds =
