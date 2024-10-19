@@ -12,6 +12,6 @@ class WeightedSumScorer : Scorer {
 
     override fun invoke(): Double =
         scorers.sumOf { (weight, scorer) ->
-            weight * scorer().toDouble()
+            weight * scorer()
         }
 }

@@ -4,7 +4,7 @@ class FrequencyScorer(
     private val scoreFun: (Int) -> Double,
     private val frequencies: () -> Iterable<Int>,
 ) : Scorer {
-    override fun invoke(): Double = frequencies().sumOf { scoreFun(it) }.toDouble()
+    override fun invoke(): Double = frequencies().sumOf { scoreFun(it) }
 }
 
 fun lessThanOrEqualTo(threshold: Int) = { x: Int -> maxOf(x - threshold, 0).toDouble() }
