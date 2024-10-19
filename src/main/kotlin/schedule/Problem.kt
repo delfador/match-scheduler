@@ -22,8 +22,7 @@ data class Problem(
 
     fun averageMatchesPlayed(numberOfRounds: Int): Double = numberOfRounds * matchesPerRound * playersPerMatch / numberOfPlayers.toDouble()
 
-    fun averagePairs(numberOfRounds: Int): Double =
-        numberOfRounds.toDouble() / cycleLength * (cycleLength - 1) * (playersPerMatch - 1) / (numberOfPlayers - 1)
+    fun averagePairs(numberOfRounds: Int): Double = averageMatchesPlayed(numberOfRounds) * (playersPerMatch - 1) / (numberOfPlayers - 1)
 
     override fun toString() =
         buildString {

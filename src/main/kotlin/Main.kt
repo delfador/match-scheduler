@@ -5,7 +5,14 @@ import org.ruud.schedule.Reporter
 import org.ruud.score.HillClimbing
 
 fun main() {
-    val problem = Problem(10, 20, 4)
+    print("Number of players > ")
+    val numberOfPlayers = readln().toInt()
+
+    print("Number of rounds > ")
+    val numberOfRounds = readln().toInt()
+    val playersPerMatch = 4
+
+    val problem = Problem(numberOfPlayers, numberOfRounds, playersPerMatch)
     val solver = HillClimbing(problem)
     val schedule = solver.solve(100_000)
     val reporter = Reporter(problem)
