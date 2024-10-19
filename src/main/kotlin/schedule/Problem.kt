@@ -9,6 +9,8 @@ data class Problem(
 ) {
     init {
         check(numberOfPlayers >= playersPerMatch)
+        check(numberOfRounds > 0)
+        check(playersPerMatch > 0)
     }
 
     val matchesPerRound = numberOfPlayers / playersPerMatch
@@ -17,4 +19,6 @@ data class Problem(
 
     /** The number of rounds in which, ideally, every player should have exactly one idle round. */
     val cycleLength = lcm(numberOfPlayers, playersPerRound) / playersPerRound
+
+    fun averageMatchesPlayed(numberOfRounds: Int): Double = numberOfRounds * matchesPerRound * playersPerMatch / numberOfPlayers.toDouble()
 }

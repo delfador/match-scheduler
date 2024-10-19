@@ -26,4 +26,11 @@ class ProblemTest {
         assertThat(Problem(6, 1, 4).cycleLength).isEqualTo(3)
         assertThat(Problem(10, 1, 4).cycleLength).isEqualTo(5)
     }
+
+    @Test
+    fun `should compute average matches played`() {
+        assertThat(Problem(4, 1, 4).averageMatchesPlayed(4)).isEqualTo(4.0)
+        assertThat(Problem(5, 1, 4).averageMatchesPlayed(5)).isEqualTo(4.0)
+        assertThat(Problem(10, 1, 4).averageMatchesPlayed(10)).isEqualTo(8.0)
+    }
 }
