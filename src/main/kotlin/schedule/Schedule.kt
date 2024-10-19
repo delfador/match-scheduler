@@ -29,4 +29,13 @@ class Schedule(
     override fun equals(other: Any?): Boolean = other is Schedule && _rounds == other._rounds
 
     override fun hashCode(): Int = _rounds.hashCode()
+
+    override fun toString() =
+        buildString {
+            appendLine("SCHEDULE")
+            rounds.forEachIndexed { index, round ->
+                val roundLabel = "$index".padStart(2)
+                appendLine("$roundLabel: $round")
+            }
+        }
 }
