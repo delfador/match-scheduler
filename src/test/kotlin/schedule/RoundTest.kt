@@ -101,4 +101,19 @@ class RoundTest {
         assertThat(round.playing).containsExactlyInAnyOrder(3, 4, 0, 1)
         assertThat(round.idle).containsExactlyInAnyOrder(2)
     }
+
+    @Test
+    fun `should return equals based state of player list`() {
+        val round1 = Round.regular(numberOfPlayers = 6, playersPerMatch = 4)
+        val round2 = Round.regular(numberOfPlayers = 6, playersPerMatch = 4)
+        val round3 = Round.regular(numberOfPlayers = 6, playersPerMatch = 4, rotate = 1)
+
+        assertThat(round1).isEqualTo(round2)
+        assertThat(round1).isNotEqualTo(round3)
+
+        round1.rotate(1)
+
+        assertThat(round1).isNotEqualTo(round2)
+        assertThat(round1).isEqualTo(round3)
+    }
 }

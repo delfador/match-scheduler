@@ -2,16 +2,18 @@ package org.ruud.schedule
 
 import org.ruud.common.pairs
 import java.util.Collections
+import kotlin.random.Random
 
 class Round(
     players: List<Int>,
-    private val playersPerMatch: Int,
+    val playersPerMatch: Int,
 ) {
     init {
         require(players.toSet() == players.indices.toSet())
         require(players.size >= playersPerMatch)
     }
 
+    val size = players.size
     private val numberOfMatches = players.size / playersPerMatch
     private val numberPlaying = playersPerMatch * numberOfMatches
     private val players = players.toMutableList()
@@ -43,5 +45,30 @@ class Round(
 
     fun rotate(steps: Int) {
         Collections.rotate(players, steps)
+    }
+
+    override fun equals(other: Any?): Boolean = other is Round && players == other.players
+
+    override fun hashCode(): Int = players.hashCode()
+
+    companion object {
+        fun regular(
+            numberOfPlayers: Int,
+            playersPerMatch: Int,
+            rotate: Int = 0,
+        ): Round {
+            val players = (0 until numberOfPlayers).toList()
+            Collections.rotate(players, rotate)
+            return Round(players, playersPerMatch)
+        }
+
+        fun random(
+            numberOfPlayers: Int,
+            playersPerMatch: Int,
+            random: Random = Random,
+        ): Round {
+            val players = (0 until numberOfPlayers).shuffled()
+            return Round(players, playersPerMatch)
+        }
     }
 }
