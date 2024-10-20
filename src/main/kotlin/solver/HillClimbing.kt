@@ -1,54 +1,30 @@
 package org.ruud.solver
 
-import org.ruud.schedule.Problem
-import org.ruud.schedule.RandomInitializer
-import org.ruud.schedule.Schedule
-import org.ruud.score.BasicScorerFactory
-import org.ruud.score.ScorerFactory
-import kotlin.random.Random
-
-class HillClimbing(
-    private val problem: Problem,
-    private val scorerFactory: ScorerFactory = BasicScorerFactory(problem),
-) {
-    fun solve(maxIter: Int = 1_000): Schedule {
-        val schedule = RandomInitializer(problem).create()
-        val scorer = scorerFactory.create(schedule)
-
-        var bestScore = scorer()
-        var incumbent = schedule.copy()
+class HillClimbing<T : Solution<T>> {
+    fun solve(
+        initialSolution: T,
+        maxIter: Int = 1_000,
+    ): T {
+        val solution = initialSolution.copy()
+        var bestSolution = initialSolution.copy()
+        var bestScore = bestSolution.score()
         var iter = 0
 
         while (iter < maxIter) {
             iter++
 
-            val round = schedule.rounds.random()
-            val (i, j) = randomIndices()
-            round.swapPositions(i, j)
-
-            val score = scorer()
+            solution.move()
+            val score = solution.score()
 
             if (score < bestScore) {
-                incumbent = schedule.copy()
-                bestScore = score
                 println("$iter: $score")
+                bestScore = score
+                bestSolution = solution.copy()
             } else {
-                round.swapPositions(j, i)
+                solution.undoMove()
             }
         }
 
-        println(scorer.reportString())
-
-        return incumbent
-    }
-
-    private fun randomIndices(): Pair<Int, Int> {
-        val index1 = Random.nextInt(problem.numberOfPlayers)
-        var index2 = Random.nextInt(problem.numberOfPlayers)
-        while (index2 == index1) {
-            index2 = Random.nextInt(problem.numberOfPlayers)
-        }
-
-        return Pair(index1, index2)
+        return bestSolution
     }
 }
