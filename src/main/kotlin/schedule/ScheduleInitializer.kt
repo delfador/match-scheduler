@@ -1,6 +1,4 @@
-package org.ruud.solver
-
-import org.ruud.schedule.Schedule
+package org.ruud.schedule
 
 interface ScheduleInitializer {
     fun create(): Schedule

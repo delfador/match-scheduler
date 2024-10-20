@@ -1,6 +1,7 @@
 package org.ruud.solver
 
 import org.ruud.schedule.Problem
+import org.ruud.schedule.RandomInitializer
 import org.ruud.schedule.Schedule
 import org.ruud.score.BasicScorerFactory
 import org.ruud.score.ScorerFactory

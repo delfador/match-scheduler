@@ -1,8 +1,4 @@
-package org.ruud.solver
-
-import org.ruud.schedule.Problem
-import org.ruud.schedule.Round
-import org.ruud.schedule.Schedule
+package org.ruud.schedule
 
 class RandomInitializer(
     private val problem: Problem,
