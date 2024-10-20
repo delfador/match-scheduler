@@ -18,12 +18,17 @@ class BasicScorerFactory(
             ) { matchesPlayed.frequencies().values }
 
         val intermediateMatchesPlayed =
-            intermediateRounds.map { roundNumber ->
-                val target = problem.averageMatchesPlayed(roundNumber).toInt() - 1
-                FrequencyScorer(
-                    scoreFun = greaterThanOrEqualTo(target),
-                    label = "Matches played until round $roundNumber",
-                ) { matchesPlayed.frequencies(0, roundNumber).values }
+            if (problem.cycleLength > 2) {
+                val subListSize = problem.cycleLength + 1
+                val target = problem.averageMatchesPlayed(problem.cycleLength).toInt()
+                (0 until problem.numberOfRounds - subListSize).map { roundIndex ->
+                    FrequencyScorer(
+                        scoreFun = greaterThanOrEqualTo(target),
+                        label = "Matches played in $roundIndex-${roundIndex + subListSize - 1} >= $target",
+                    ) { matchesPlayed.frequencies(roundIndex, roundIndex + subListSize).values }
+                }
+            } else {
+                emptyList()
             }
 
         val minimumTotalPairFrequency =
