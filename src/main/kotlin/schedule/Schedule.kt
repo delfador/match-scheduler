@@ -14,6 +14,10 @@ class Schedule(
         }
     }
 
+    val numberOfRounds = rounds.size
+    val numerOfPlayers = rounds.first().size
+    val playersPerMatch = rounds.first().playersPerMatch
+    val numberOfMatches = rounds.first()
     private val _rounds = rounds.mapTo(mutableListOf()) { it.copy() }
     val rounds: List<Round> = _rounds
 

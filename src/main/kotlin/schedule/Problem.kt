@@ -8,9 +8,9 @@ data class Problem(
     val playersPerMatch: Int,
 ) {
     init {
-        check(numberOfPlayers >= playersPerMatch)
-        check(numberOfRounds > 0)
-        check(playersPerMatch > 0)
+        check(numberOfPlayers > playersPerMatch)
+        check(numberOfRounds > 1)
+        check(playersPerMatch > 1)
     }
 
     val matchesPerRound = numberOfPlayers / playersPerMatch
