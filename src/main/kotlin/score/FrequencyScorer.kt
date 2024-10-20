@@ -2,6 +2,7 @@ package org.ruud.score
 
 class FrequencyScorer(
     private val scoreFun: (Int) -> Double,
+    override val label: String = "scorer",
     private val frequencies: () -> Iterable<Int>,
 ) : Scorer {
     override fun invoke(): Double = frequencies().sumOf { scoreFun(it) }

@@ -1,5 +1,7 @@
 package org.ruud.common
 
+import java.util.Locale
+
 fun <T : Comparable<T>> Iterable<T>.pairs(): Collection<Pair<T, T>> {
     val sortedList = sorted()
 
@@ -15,3 +17,5 @@ fun <T : Comparable<T>> Iterable<T>.pairs(): Collection<Pair<T, T>> {
         }
     }
 }
+
+fun Double.format(decimals: Int = 2): String = "%.${decimals}f".format(locale = Locale.ENGLISH, this)

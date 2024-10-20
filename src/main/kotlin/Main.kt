@@ -2,7 +2,7 @@ package org.ruud
 
 import org.ruud.schedule.Problem
 import org.ruud.schedule.Reporter
-import org.ruud.score.HillClimbing
+import org.ruud.solver.HillClimbing
 
 fun main() {
     print("Number of players > ")
@@ -14,7 +14,7 @@ fun main() {
 
     val problem = Problem(numberOfPlayers, numberOfRounds, playersPerMatch)
     val solver = HillClimbing(problem)
-    val schedule = solver.solve(100_000)
+    val schedule = solver.solve(10_000)
     val reporter = Reporter(problem)
     println(reporter.report(schedule))
 }

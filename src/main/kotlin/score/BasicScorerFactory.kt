@@ -13,25 +13,35 @@ class BasicScorerFactory(
 
         val minimumTotalMatchesPlayed =
             FrequencyScorer(
-                greaterThanOrEqualTo(problem.averageMatchesPlayed(problem.numberOfRounds).toInt()),
+                scoreFun = greaterThanOrEqualTo(problem.averageMatchesPlayed(problem.numberOfRounds).toInt()),
+                label = "Total matches played",
             ) { matchesPlayed.frequencies().values }
 
         val intermediateMatchesPlayed =
             intermediateRounds.map { roundNumber ->
                 val target = problem.averageMatchesPlayed(roundNumber).toInt() - 1
-                FrequencyScorer(greaterThanOrEqualTo(target)) { matchesPlayed.frequencies(0, roundNumber).values }
+                FrequencyScorer(
+                    scoreFun = greaterThanOrEqualTo(target),
+                    label = "Matches played until round $roundNumber",
+                ) { matchesPlayed.frequencies(0, roundNumber).values }
             }
 
         val minimumTotalPairFrequency =
             run {
                 val target = problem.averagePairs(problem.numberOfRounds).toInt()
-                FrequencyScorer(greaterThanOrEqualTo(target)) { pairs.frequencies().values }
+                FrequencyScorer(
+                    scoreFun = greaterThanOrEqualTo(target),
+                    label = "Final pair frequency",
+                ) { pairs.frequencies().values }
             }
 
         val intermediatePairFrequency =
             intermediateRounds.map { roundNumber ->
                 val target = problem.averagePairs(roundNumber).toInt()
-                FrequencyScorer(greaterThanOrEqualTo(target)) { pairs.frequencies(0, roundNumber).values }
+                FrequencyScorer(
+                    scoreFun = greaterThanOrEqualTo(target),
+                    label = "Pair frequency until round $roundNumber",
+                ) { pairs.frequencies(0, roundNumber).values }
             }
 
         val weightedSumScorer =

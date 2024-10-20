@@ -1,8 +1,9 @@
-package org.ruud.score
+package org.ruud.solver
 
 import org.ruud.schedule.Problem
 import org.ruud.schedule.Schedule
-import org.ruud.solver.RandomInitializer
+import org.ruud.score.BasicScorerFactory
+import org.ruud.score.ScorerFactory
 import kotlin.random.Random
 
 class HillClimbing(
@@ -34,6 +35,8 @@ class HillClimbing(
                 round.swapPositions(j, i)
             }
         }
+
+        println(scorer.reportString())
 
         return incumbent
     }
