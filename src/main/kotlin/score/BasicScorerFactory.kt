@@ -17,19 +17,7 @@ class BasicScorerFactory(
                 label = "Total matches played",
             ) { matchesPlayed.frequencies().values }
 
-        val intermediateMatchesPlayed =
-            if (problem.cycleLength > 2) {
-                val subListSize = problem.cycleLength + 1
-                val target = problem.averageMatchesPlayed(problem.cycleLength).toInt()
-                (0 until problem.numberOfRounds - subListSize).map { roundIndex ->
-                    FrequencyScorer(
-                        scoreFun = greaterThanOrEqualTo(target),
-                        label = "Matches played in $roundIndex-${roundIndex + subListSize - 1} >= $target",
-                    ) { matchesPlayed.frequencies(roundIndex, roundIndex + subListSize).values }
-                }
-            } else {
-                emptyList()
-            }
+        val idleGaps = IdleGaps(schedule, allowedGap = problem.cycleLength - 1)
 
         val minimumTotalPairFrequency =
             run {
@@ -52,7 +40,7 @@ class BasicScorerFactory(
         val weightedSumScorer =
             WeightedSumScorer().apply {
                 add(100.0, minimumTotalMatchesPlayed)
-                intermediateMatchesPlayed.forEach { add(10.0, it) }
+                add(10.0, idleGaps)
 
                 add(2.0, minimumTotalPairFrequency)
                 intermediatePairFrequency.forEach { add(0.5, it) }

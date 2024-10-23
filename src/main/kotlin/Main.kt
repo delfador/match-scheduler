@@ -10,9 +10,11 @@ import org.ruud.solver.HillClimbing
 fun main() {
     print("Number of players > ")
     val numberOfPlayers = readln().toInt()
+    // val numberOfPlayers = 10
 
     print("Number of rounds > ")
     val numberOfRounds = readln().toInt()
+    // val numberOfRounds = 20
     val playersPerMatch = 4
 
     val problem = Problem(numberOfPlayers, numberOfRounds, playersPerMatch)
