@@ -11,20 +11,21 @@ class BasicScorerFactory(
         val matchesPlayed = RoundFrequency(schedule) { it.playing }
         val pairs = RoundFrequency(schedule) { it.pairs }
 
+        val targetMatchesPlayed = problem.averageMatchesPlayed(problem.numberOfRounds).toInt()
         val minimumTotalMatchesPlayed =
             FrequencyScorer(
-                scoreFun = greaterThanOrEqualTo(problem.averageMatchesPlayed(problem.numberOfRounds).toInt()),
-                label = "Total matches played",
+                scoreFun = greaterThanOrEqualTo(targetMatchesPlayed),
+                label = "Total matches played < $targetMatchesPlayed",
             ) { matchesPlayed.frequencies().values }
 
-        val idleGaps = IdleGaps(schedule, allowedGap = problem.cycleLength - 1)
+        val idleGaps = IdleGaps(schedule, allowedGap = problem.cycleLength - 2)
 
         val minimumTotalPairFrequency =
             run {
                 val target = problem.averagePairs(problem.numberOfRounds).toInt()
                 FrequencyScorer(
                     scoreFun = greaterThanOrEqualTo(target),
-                    label = "Final pair frequency",
+                    label = "Final pair frequency < $target",
                 ) { pairs.frequencies().values }
             }
 
@@ -43,7 +44,7 @@ class BasicScorerFactory(
                 add(10.0, idleGaps)
 
                 add(2.0, minimumTotalPairFrequency)
-                intermediatePairFrequency.forEach { add(0.5, it) }
+                // intermediatePairFrequency.forEach { add(0.5, it) }
             }
 
         return weightedSumScorer

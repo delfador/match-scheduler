@@ -5,7 +5,7 @@ import org.ruud.schedule.Schedule
 class IdleGaps(
     private val schedule: Schedule,
     private val allowedGap: Int,
-    override val label: String = "Idle Gaps",
+    override val label: String = "Idle Gaps < $allowedGap",
 ) : Scorer {
     override fun invoke(): Double {
         val idleRoundsByPlayer =
@@ -19,12 +19,10 @@ class IdleGaps(
 
         val idleGaps =
             idleRoundsByPlayer.values.flatMap { indices ->
-                indices.zipWithNext { a, b -> b - a }
+                indices.zipWithNext { a, b -> b - a - 1 }
             }
         val idleGapExcess = idleGaps.map { maxOf(allowedGap - it, 0) }
 
         return idleGapExcess.sum().toDouble()
     }
-
-    private fun minimumGap(indices: List<Int>): Int = indices.zipWithNext { a, b -> b - a }.minOrNull() ?: Int.MAX_VALUE
 }

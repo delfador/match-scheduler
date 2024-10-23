@@ -22,22 +22,27 @@ fun main() {
     val playersPerMatch = 4
 
     val problem = Problem(numberOfPlayers, numberOfRounds, playersPerMatch)
-    val initialSchedule = RandomInitializer(problem).create()
     val initialSolution =
         AnnealSolution(
             problem = problem,
-            schedule = initialSchedule,
+            schedule = RandomInitializer(problem).create(),
             scorerFactory = BasicScorerFactory(problem),
             moveSelector =
                 MoveSelector(
                     listOf(
-                        5.0 to MoveType.SwapPlayer,
-                        1.0 to MoveType.RotatePlayers,
-                        1.0 to MoveType.SwapRound,
+                        10.0 to MoveType.SwapPlayer,
+                        // 1.0 to MoveType.RotatePlayers,
+                        5.0 to MoveType.SwapRound,
                     ),
                 ),
         )
-    val solution = Anneal<Schedule, Move>().solve(initialSolution, 100.0, 0.99, 10_000)
+    val solution =
+        Anneal<Schedule, Move>().solve(
+            initialSolution = initialSolution,
+            initialTemperature = 10_000.0,
+            coolingRate = 0.999,
+            maxIter = 100_000,
+        )
     val schedule = solution.getState()
 
     val reporter = Reporter(problem)

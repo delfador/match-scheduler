@@ -26,10 +26,11 @@ class WeightedSumScorer(
                 val score = scorer.invoke()
                 val weightedScore = weight * score
                 append("  ${scorer.label.padEnd(35)}:")
-                append(" ${weight.format(2).padStart(6)}")
-                append(", ${score.format(4).padStart(8)}")
-                appendLine(" = ${weightedScore.format(4).padStart(8)}")
+                append(" weight = ${weight.format(2).padStart(6)}")
+                append(", score = ${score.format(4).padStart(8)}")
+                appendLine(", weighted score = ${weightedScore.format(4).padStart(8)}")
             }
-            appendLine("Total score: ${invoke().format(4)}")
+            appendLine()
+            appendLine("  TOTAL SCORE: ${invoke().format(4)}")
         }
 }
