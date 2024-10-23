@@ -1,11 +1,17 @@
-package org.ruud.solver
+package solver
 
-interface Solution<T> {
+interface Solution<S, M> {
     fun score(): Double
 
-    fun copy(): T
+    fun detailScore(): String
 
-    fun move()
+    fun randomMove(): M
 
-    fun undoMove()
+    fun execute(move: M)
+
+    fun undo(move: M)
+
+    fun copy(): Solution<S, M>
+
+    fun getState(): S
 }
