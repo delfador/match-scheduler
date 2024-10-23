@@ -27,5 +27,5 @@ class AnnealSolution(
         move.undo(schedule)
     }
 
-    override fun copy(): Solution<Schedule, Move> = AnnealSolution(problem, schedule, scorerFactory, moveSelector)
+    override fun copy(): Solution<Schedule, Move> = AnnealSolution(problem, schedule.copy(), scorerFactory, moveSelector)
 }
