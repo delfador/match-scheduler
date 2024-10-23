@@ -1,11 +1,13 @@
 package org.ruud
 
+import org.ruud.schedule.MoveSelector
 import org.ruud.schedule.Problem
 import org.ruud.schedule.RandomInitializer
 import org.ruud.schedule.Reporter
 import org.ruud.schedule.ScheduleSolution
 import org.ruud.score.BasicScorerFactory
 import org.ruud.solver.HillClimbing
+import schedule.MoveType
 
 fun main() {
     print("Number of players > ")
@@ -24,6 +26,14 @@ fun main() {
             problem = problem,
             schedule = initialSchedule,
             scorerFactory = BasicScorerFactory(problem),
+            moveSelector =
+                MoveSelector(
+                    listOf(
+                        5.0 to MoveType.SwapPlayer,
+                        1.0 to MoveType.RotatePlayers,
+                        1.0 to MoveType.SwapRound,
+                    ),
+                ),
         )
     val solution = HillClimbing<ScheduleSolution>().solve(initialSolution, maxIter = 10_000)
     val schedule = solution.schedule

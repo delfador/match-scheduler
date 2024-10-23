@@ -15,12 +15,12 @@ class SwapRounds(
     }
 
     companion object {
-        fun random(schedule: Schedule): SwapRounds {
-            val round1 = Random.nextInt(schedule.numberOfRounds)
-            var round2 = Random.nextInt(schedule.numberOfRounds)
+        fun random(numberOfRounds: Int): SwapRounds {
+            val round1 = Random.nextInt(numberOfRounds)
+            var round2 = Random.nextInt(numberOfRounds)
 
             while (round2 == round1) {
-                round2 = Random.nextInt(schedule.numberOfRounds)
+                round2 = Random.nextInt(numberOfRounds)
             }
 
             return SwapRounds(round1, round2)

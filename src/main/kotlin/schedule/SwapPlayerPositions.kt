@@ -16,13 +16,17 @@ class SwapPlayerPositions(
     }
 
     companion object {
-        fun random(schedule: Schedule): SwapPlayerPositions {
-            val roundIndex = Random.nextInt(schedule.numberOfRounds)
-            val index1 = Random.nextInt(schedule.numerOfPlayers)
-            var index2 = Random.nextInt(schedule.numerOfPlayers)
+        fun random(
+            numberOfPlayers: Int,
+            numberOfRounds: Int,
+            playersPerMatch: Int,
+        ): SwapPlayerPositions {
+            val roundIndex = Random.nextInt(numberOfRounds)
+            val index1 = Random.nextInt(numberOfPlayers)
+            var index2 = Random.nextInt(numberOfPlayers)
 
-            while (inSameMatch(index1, index2, schedule.playersPerMatch)) {
-                index2 = Random.nextInt(schedule.numerOfPlayers)
+            while (inSameMatch(index1, index2, playersPerMatch)) {
+                index2 = Random.nextInt(numberOfPlayers)
             }
             return SwapPlayerPositions(roundIndex, index1, index2)
         }

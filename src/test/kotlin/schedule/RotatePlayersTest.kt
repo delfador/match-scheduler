@@ -1,13 +1,12 @@
 package schedule
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import org.ruud.schedule.RotateRound
+import org.ruud.schedule.RotatePlayers
 import org.ruud.schedule.Round
 import org.ruud.schedule.Schedule
 
-class RotateRoundTest {
+class RotatePlayersTest {
     private val rounds =
         listOf(
             Round.regular(10, 4),
@@ -18,7 +17,7 @@ class RotateRoundTest {
 
     @Test
     fun `should perform the configured swap`() {
-        val move = RotateRound(round = 0, steps = 2)
+        val move = RotatePlayers(round = 0, steps = 2)
 
         move.execute(schedule)
 
@@ -31,7 +30,7 @@ class RotateRoundTest {
     fun `should return to original schedule after execute and undo`() {
         val scheduleCopy = schedule.copy()
 
-        val move = RotateRound(round = 0, steps = 2)
+        val move = RotatePlayers(round = 0, steps = 2)
         move.execute(schedule)
         move.undo(schedule)
 

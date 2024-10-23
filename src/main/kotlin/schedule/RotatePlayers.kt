@@ -2,7 +2,7 @@ package org.ruud.schedule
 
 import kotlin.random.Random
 
-class RotateRound(
+class RotatePlayers(
     val round: Int,
     val steps: Int,
 ) : Move {
@@ -15,10 +15,13 @@ class RotateRound(
     }
 
     companion object {
-        fun random(schedule: Schedule): RotateRound {
-            val roundIndex = Random.nextInt(schedule.numerOfPlayers)
-            val steps = Random.nextInt(1, schedule.playersPerMatch - 1)
-            return RotateRound(roundIndex, steps)
+        fun random(
+            numberOfRounds: Int,
+            playersPerMatch: Int,
+        ): RotatePlayers {
+            val roundIndex = Random.nextInt(numberOfRounds)
+            val steps = Random.nextInt(1, playersPerMatch - 1)
+            return RotatePlayers(roundIndex, steps)
         }
     }
 }
