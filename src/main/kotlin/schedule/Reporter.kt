@@ -18,15 +18,8 @@ class Reporter(
 
             val pairsFrequency = RoundFrequency(schedule) { it.pairs }
 
-            val roundsToReport =
-                (
-                    (problem.cycleLength until problem.numberOfRounds step problem.cycleLength).toList() +
-                        listOf(problem.numberOfRounds)
-                ).distinct()
             appendLine()
-            roundsToReport.forEach { numberOfRounds ->
-                appendLine(pairFrequencyReport(pairsFrequency, numberOfRounds))
-            }
+            appendLine(pairFrequencyReport(pairsFrequency, problem.numberOfRounds))
         }
 
     private fun pairFrequencyReport(
