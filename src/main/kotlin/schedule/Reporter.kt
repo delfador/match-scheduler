@@ -1,6 +1,6 @@
 package org.ruud.schedule
 
-import org.ruud.score.PlayingStreak
+import org.ruud.schedule.score.PlayingStreak
 
 class Reporter(
     private val problem: Problem,

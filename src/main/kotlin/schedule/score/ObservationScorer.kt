@@ -1,4 +1,4 @@
-package org.ruud.score
+package org.ruud.schedule.score
 
 class ObservationScorer(
     private val observationScore: (Int) -> Double,

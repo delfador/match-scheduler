@@ -2,10 +2,10 @@ package score
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.ruud.score.ObservationScorer
-import org.ruud.score.greaterThanOrEqualTo
-import org.ruud.score.inRange
-import org.ruud.score.lessThanOrEqualTo
+import org.ruud.schedule.score.ObservationScorer
+import org.ruud.schedule.score.greaterThanOrEqualTo
+import org.ruud.schedule.score.inRange
+import org.ruud.schedule.score.lessThanOrEqualTo
 
 class ObservationScorerTest {
     @Test

@@ -1,4 +1,4 @@
-package org.ruud.score
+package org.ruud.schedule.score
 
 interface Scorer : () -> Double {
     val label: String

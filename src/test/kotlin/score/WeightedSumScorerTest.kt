@@ -2,8 +2,8 @@ package score
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.ruud.score.Scorer
-import org.ruud.score.WeightedSumScorer
+import org.ruud.schedule.score.Scorer
+import org.ruud.schedule.score.WeightedSumScorer
 
 class WeightedSumScorerTest {
     class ScorerStub(

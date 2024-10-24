@@ -2,7 +2,7 @@ package org.ruud.schedule
 
 import org.ruud.schedule.move.Move
 import org.ruud.schedule.move.MoveSelector
-import org.ruud.score.ScorerFactory
+import org.ruud.schedule.score.ScorerFactory
 import solver.Solution
 
 class AnnealSolution(

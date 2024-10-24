@@ -8,7 +8,7 @@ import org.ruud.schedule.Schedule
 import org.ruud.schedule.move.Move
 import org.ruud.schedule.move.MoveSelector
 import org.ruud.schedule.move.MoveType
-import org.ruud.score.BasicScorerFactory
+import org.ruud.schedule.score.BasicScorerFactory
 import org.ruud.solver.Anneal
 
 fun main() {
