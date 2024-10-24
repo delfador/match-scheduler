@@ -1,5 +1,7 @@
 package org.ruud.schedule
 
+import org.ruud.schedule.move.Move
+import org.ruud.schedule.move.MoveSelector
 import org.ruud.score.ScorerFactory
 import solver.Solution
 

@@ -1,5 +1,6 @@
-package org.ruud.schedule
+package org.ruud.schedule.move
 
+import org.ruud.schedule.Schedule
 import kotlin.random.Random
 
 class RotatePlayers(

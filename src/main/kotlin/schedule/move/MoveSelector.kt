@@ -1,6 +1,6 @@
-package org.ruud.schedule
+package org.ruud.schedule.move
 
-import schedule.MoveType
+import org.ruud.schedule.Schedule
 import kotlin.random.Random
 
 class MoveSelector(

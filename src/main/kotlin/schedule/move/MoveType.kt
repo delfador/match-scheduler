@@ -1,9 +1,6 @@
-package schedule
+package org.ruud.schedule.move
 
-import org.ruud.schedule.Move
 import org.ruud.schedule.Schedule
-import org.ruud.schedule.SwapPlayerPositions
-import org.ruud.schedule.SwapRounds
 
 enum class MoveType {
     SwapPlayer,
@@ -25,7 +22,7 @@ enum class MoveType {
                     )
 
                 RotatePlayers ->
-                    org.ruud.schedule.RotatePlayers.random(
+                    org.ruud.schedule.move.RotatePlayers.random(
                         numberOfRounds = schedule.numerOfPlayers,
                         playersPerMatch = schedule.playersPerMatch,
                     )
