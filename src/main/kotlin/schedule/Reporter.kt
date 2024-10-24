@@ -12,6 +12,7 @@ class Reporter(
             appendLine(matchesPlayed(schedule))
             appendLine(playingStreaks(schedule))
             appendLine(pairFrequency(schedule))
+            appendLine(matchFrequency(schedule))
         }
 
     private fun matchesPlayed(schedule: Schedule) =
@@ -52,4 +53,37 @@ class Reporter(
                 appendLine("$frequency: $pairs")
             }
         }
+
+    private fun matchFrequency(schedule: Schedule): String {
+        val matchFrequencies =
+            schedule
+                .rounds
+                .flatMap { round ->
+                    round.allMatches().map { it.sorted() }
+                }.groupingBy { it }
+                .eachCount()
+
+        val matchesByFrequency =
+            matchFrequencies
+                .toList()
+                .groupBy { (_, frequency) -> frequency }
+                .toSortedMap()
+                .mapValues { (_, freqPair) ->
+                    val matches = freqPair.map { it.first }
+                    matches
+                }
+
+        return buildString {
+            appendLine("MATCH FREQUENCIES")
+            matchesByFrequency.forEach { (frequency, matches) ->
+                val matchString =
+                    if (matches.size > 4) {
+                        "${matches.size} matches"
+                    } else {
+                        matches.toString()
+                    }
+                appendLine("$frequency: $matchString")
+            }
+        }
+    }
 }

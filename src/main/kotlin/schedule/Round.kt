@@ -45,9 +45,9 @@ class Round(
         update()
     }
 
-    private fun playersInMatch(index: Int) = players.subList(index * playersPerMatch, (index + 1) * playersPerMatch)
+    private fun playersInMatch(index: Int): List<Int> = players.subList(index * playersPerMatch, (index + 1) * playersPerMatch)
 
-    private fun allMatches() = List(numberOfMatches) { playersInMatch(it) }
+    fun allMatches() = List(numberOfMatches) { playersInMatch(it) }
 
     override fun toString() = (allMatches() + listOf(idle)).joinToString(", ") { it.toString() }
 
