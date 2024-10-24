@@ -39,10 +39,4 @@ class BasicScorerFactory(
 
         return weightedSumScorer
     }
-
-    private val intermediateRounds =
-        run {
-            val step = problem.cycleLength.coerceAtLeast(5)
-            (step until problem.numberOfRounds step step)
-        }
 }

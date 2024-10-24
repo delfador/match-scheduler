@@ -86,7 +86,7 @@ class Round(
             playersPerMatch: Int,
             random: Random = Random,
         ): Round {
-            val players = (0 until numberOfPlayers).shuffled()
+            val players = (0 until numberOfPlayers).shuffled(random)
             return Round(players, playersPerMatch)
         }
     }
