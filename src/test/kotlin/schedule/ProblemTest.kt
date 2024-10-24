@@ -25,6 +25,7 @@ class ProblemTest {
         assertThat(Problem(5, 2, 4).cycleLength).isEqualTo(5)
         assertThat(Problem(6, 2, 4).cycleLength).isEqualTo(3)
         assertThat(Problem(10, 2, 4).cycleLength).isEqualTo(5)
+        assertThat(Problem(7, 2, 4).cycleLength).isEqualTo(7)
     }
 
     @Test

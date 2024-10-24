@@ -1,5 +1,7 @@
 package org.ruud.schedule
 
+import org.ruud.score.PlayingStreak
+
 class Reporter(
     private val problem: Problem,
 ) {
@@ -14,6 +16,15 @@ class Reporter(
             for (index in schedule.rounds.indices) {
                 val roundLabel = "$index".padStart(2)
                 appendLine("$roundLabel: ${matchesPlayed.frequencies(0, index + 1)}")
+            }
+
+            appendLine()
+            appendLine("PLAYING STREAKS (excluding start/end boundaries)")
+            val playingStreaksByPlayer = PlayingStreak.playingStreaksByPlayer(schedule).toSortedMap()
+            playingStreaksByPlayer.forEach { (player, streaks) ->
+                val minimumStreak = streaks.minOrNull()
+                val maximumStreak = streaks.maxOrNull()
+                appendLine("${player.toString().padStart(2)}: $streaks (min: $minimumStreak, max: $maximumStreak)")
             }
 
             val pairsFrequency = RoundFrequency(schedule) { it.pairs }

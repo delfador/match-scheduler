@@ -18,7 +18,7 @@ class BasicScorerFactory(
                 label = "Total matches played < $targetMatchesPlayed",
             ) { matchesPlayed.frequencies().values }
 
-        val idleGaps = IdleGaps(schedule, allowedGap = problem.cycleLength - 2)
+        val playingStreak = PlayingStreak(schedule, targetStreak = problem.acceptablePlayingStreak)
 
         val minimumTotalPairFrequency =
             run {
@@ -40,8 +40,8 @@ class BasicScorerFactory(
 
         val weightedSumScorer =
             WeightedSumScorer().apply {
-                add(100.0, minimumTotalMatchesPlayed)
-                add(10.0, idleGaps)
+                add(10.0, minimumTotalMatchesPlayed)
+                add(10.0, playingStreak)
 
                 add(2.0, minimumTotalPairFrequency)
                 // intermediatePairFrequency.forEach { add(0.5, it) }

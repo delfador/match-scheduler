@@ -1,5 +1,6 @@
 package org.ruud.schedule
 
+import org.ruud.common.format
 import org.ruud.common.lcm
 
 data class Problem(
@@ -15,10 +16,19 @@ data class Problem(
 
     val matchesPerRound = numberOfPlayers / playersPerMatch
     val playersPerRound = matchesPerRound * playersPerMatch
-    val idlePlayersPerRound = numberOfPlayers - playersPerMatch
+    val idlePlayersPerRound = numberOfPlayers - playersPerRound
 
     /** The number of rounds in which, ideally, every player should have exactly one idle round. */
     val cycleLength = lcm(numberOfPlayers, playersPerRound) / playersPerRound
+
+    val idealPlayingStreak =
+        if (idlePlayersPerRound == 0) {
+            Double.POSITIVE_INFINITY
+        } else {
+            numberOfPlayers.toDouble() / idlePlayersPerRound - 1.0
+        }
+
+    val acceptablePlayingStreak = idealPlayingStreak.toInt() - 1
 
     fun averageMatchesPlayed(numberOfRounds: Int): Double = numberOfRounds * matchesPerRound * playersPerMatch / numberOfPlayers.toDouble()
 
@@ -29,7 +39,13 @@ data class Problem(
             appendLine("PROBLEM")
             appendLine("Number of players: $numberOfPlayers")
             appendLine("Number of rounds: $numberOfRounds")
-            appendLine("Number of players per match: $playersPerMatch")
-            appendLine("Average pair frequency after $numberOfRounds rounds: ${averagePairs(numberOfRounds)}")
+            appendLine("Payers per match: $playersPerMatch")
+            appendLine("Playing players per round: $playersPerRound")
+            appendLine("Idle players per round: $idlePlayersPerRound")
+            appendLine("Average pair frequency after $numberOfRounds rounds: ${averagePairs(numberOfRounds).format(2)}")
+            // appendLine("Cycle length: $cycleLength rounds")
+            appendLine("Ideal playing streak: ${idealPlayingStreak.format(2)} rounds")
+            appendLine("Acceptable playing streak: $acceptablePlayingStreak..${acceptablePlayingStreak + 2} " +
+                "(excluding start/end boundaries)")
         }
 }
