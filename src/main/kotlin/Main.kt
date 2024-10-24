@@ -1,10 +1,10 @@
 package org.ruud
 
-import org.ruud.schedule.AnnealSolution
 import org.ruud.schedule.Problem
 import org.ruud.schedule.RandomInitializer
 import org.ruud.schedule.Reporter
 import org.ruud.schedule.Schedule
+import org.ruud.schedule.ScheduleSolution
 import org.ruud.schedule.move.Move
 import org.ruud.schedule.move.MoveSelector
 import org.ruud.schedule.move.MoveType
@@ -23,7 +23,7 @@ fun main() {
 
     val problem = Problem(numberOfPlayers, numberOfRounds, playersPerMatch)
     val initialSolution =
-        AnnealSolution(
+        ScheduleSolution(
             problem = problem,
             schedule = RandomInitializer(problem).create(),
             scorerFactory = BasicScorerFactory(problem),
