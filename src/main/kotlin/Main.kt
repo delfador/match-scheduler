@@ -21,20 +21,25 @@ fun main() {
     val playersPerMatch = 4
 
     val problem = Problem(numberOfPlayers, numberOfRounds, playersPerMatch)
-    val initialSolution =
-        ScheduleSolution(
+
+    val scorerFactory =
+        BasicScorerFactory(
             problem = problem,
-            schedule = Schedule.random(problem),
-            scorerFactory = BasicScorerFactory(problem),
-            moveSelector =
-                MoveSelector(
-                    listOf(
-                        10.0 to MoveType.SwapPlayer,
-                        // 1.0 to MoveType.RotatePlayers,
-                        5.0 to MoveType.SwapRound,
-                    ),
-                ),
+            totalMatchesPlayedWeight = 10.0,
+            playingStreakWeight = 10.0,
+            pairFrequencyWeight = 2.0,
         )
+
+    val moveSelector =
+        MoveSelector(
+            listOf(
+                10.0 to MoveType.SwapPlayer,
+                // 1.0 to MoveType.RotatePlayers,
+                5.0 to MoveType.SwapRound,
+            ),
+        )
+    val initialSolution = ScheduleSolution(problem, Schedule.random(problem), scorerFactory, moveSelector)
+
     val solution =
         Anneal<Schedule, Move>().solve(
             initialSolution = initialSolution,
