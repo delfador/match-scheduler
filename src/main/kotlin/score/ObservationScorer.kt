@@ -1,11 +1,11 @@
 package org.ruud.score
 
-class FrequencyScorer(
-    private val scoreFun: (Int) -> Double,
+class ObservationScorer(
+    private val observationScore: (Int) -> Double,
     override val label: String = "scorer",
-    private val frequencies: () -> Iterable<Int>,
+    private val observations: () -> Iterable<Int>,
 ) : Scorer {
-    override fun invoke(): Double = frequencies().sumOf { scoreFun(it) }
+    override fun invoke(): Double = observations().sumOf { observationScore(it) }
 }
 
 fun lessThanOrEqualTo(threshold: Int) = { x: Int -> maxOf(x - threshold, 0).toDouble() }

@@ -8,47 +8,48 @@ class Reporter(
     fun report(schedule: Schedule) =
         buildString {
             appendLine(problem)
+            appendLine(schedule)
+            appendLine(matchesPlayed(schedule))
+            appendLine(playingStreaks(schedule))
+            appendLine(pairFrequency(schedule))
+        }
 
-            appendLine(schedule.toString())
-
+    private fun matchesPlayed(schedule: Schedule) =
+        buildString {
             appendLine("MATCHES PLAYED")
             val matchesPlayed = RoundFrequency(schedule) { it.playing }
             for (index in schedule.rounds.indices) {
                 val roundLabel = "$index".padStart(2)
                 appendLine("$roundLabel: ${matchesPlayed.frequencies(0, index + 1)}")
             }
+        }
 
-            appendLine()
+    private fun playingStreaks(schedule: Schedule) =
+        buildString {
             appendLine("PLAYING STREAKS (excluding start/end boundaries)")
-            val playingStreaksByPlayer = PlayingStreak.playingStreaksByPlayer(schedule).toSortedMap()
+            val playingStreaksByPlayer = PlayingStreak(schedule).playingStreaksByPlayer()
             playingStreaksByPlayer.forEach { (player, streaks) ->
                 val minimumStreak = streaks.minOrNull()
                 val maximumStreak = streaks.maxOrNull()
                 appendLine("${player.toString().padStart(2)}: $streaks (min: $minimumStreak, max: $maximumStreak)")
             }
+        }
 
+    private fun pairFrequency(schedule: Schedule) =
+        buildString {
             val pairsFrequency = RoundFrequency(schedule) { it.pairs }
+            val frequencies = pairsFrequency.frequencies().toList()
+            val pairsByFrequency =
+                frequencies
+                    .groupBy { (_, frequency) -> frequency }
+                    .toSortedMap()
+                    .mapValues { (_, freqPair) ->
+                        freqPair.map { it.first }.sortedBy { it.first }
+                    }
 
-            appendLine()
-            appendLine(pairFrequencyReport(pairsFrequency, problem.numberOfRounds))
+            appendLine("PAIR FREQUENCY")
+            pairsByFrequency.forEach { (frequency, pairs) ->
+                appendLine("$frequency: $pairs")
+            }
         }
-
-    private fun pairFrequencyReport(
-        pairsFrequency: RoundFrequency<Pair<Int, Int>>,
-        numberOfRounds: Int,
-    ) = buildString {
-        val frequencies = pairsFrequency.frequencies(to = numberOfRounds).toList()
-        val pairsByFrequency =
-            frequencies
-                .groupBy { (_, frequency) -> frequency }
-                .toSortedMap()
-                .mapValues { (_, freqPair) ->
-                    freqPair.map { it.first }.sortedBy { it.first }
-                }
-
-        appendLine("PAIR FREQUENCY AFTER $numberOfRounds ROUNDS")
-        pairsByFrequency.forEach { (frequency, pairs) ->
-            appendLine("$frequency: $pairs")
-        }
-    }
 }

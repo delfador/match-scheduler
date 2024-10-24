@@ -21,16 +21,18 @@ data class Problem(
     /** The number of rounds in which, ideally, every player should have exactly one idle round. */
     val cycleLength = lcm(numberOfPlayers, playersPerRound) / playersPerRound
 
-    val idealPlayingStreak =
+    private val idealPlayingStreak =
         if (idlePlayersPerRound == 0) {
             Double.POSITIVE_INFINITY
         } else {
             numberOfPlayers.toDouble() / idlePlayersPerRound - 1.0
         }
 
-    val acceptablePlayingStreak = idealPlayingStreak.toInt() - 1
+    val acceptablePlayingStreak = idealPlayingStreak.toInt().let { it - 1..it + 1 }
 
-    fun averageMatchesPlayed(numberOfRounds: Int): Double = numberOfRounds * matchesPerRound * playersPerMatch / numberOfPlayers.toDouble()
+    fun averageMatchesPlayed(numberOfRounds: Int): Double =
+        numberOfRounds * matchesPerRound * playersPerMatch /
+            numberOfPlayers.toDouble()
 
     fun averagePairs(numberOfRounds: Int): Double = averageMatchesPlayed(numberOfRounds) * (playersPerMatch - 1) / (numberOfPlayers - 1)
 
@@ -43,9 +45,7 @@ data class Problem(
             appendLine("Playing players per round: $playersPerRound")
             appendLine("Idle players per round: $idlePlayersPerRound")
             appendLine("Average pair frequency after $numberOfRounds rounds: ${averagePairs(numberOfRounds).format(2)}")
-            // appendLine("Cycle length: $cycleLength rounds")
             appendLine("Ideal playing streak: ${idealPlayingStreak.format(2)} rounds")
-            appendLine("Acceptable playing streak: $acceptablePlayingStreak..${acceptablePlayingStreak + 2} " +
-                "(excluding start/end boundaries)")
+            appendLine("Acceptable playing streak: $acceptablePlayingStreak (excluding start/end boundaries)")
         }
 }

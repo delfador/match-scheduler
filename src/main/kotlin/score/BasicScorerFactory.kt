@@ -13,38 +13,28 @@ class BasicScorerFactory(
 
         val targetMatchesPlayed = problem.averageMatchesPlayed(problem.numberOfRounds).toInt()
         val minimumTotalMatchesPlayed =
-            FrequencyScorer(
-                scoreFun = greaterThanOrEqualTo(targetMatchesPlayed),
-                label = "Total matches played < $targetMatchesPlayed",
+            ObservationScorer(
+                observationScore = greaterThanOrEqualTo(targetMatchesPlayed),
+                label = "Total matches played >= $targetMatchesPlayed",
             ) { matchesPlayed.frequencies().values }
 
-        val playingStreak = PlayingStreak(schedule, targetStreak = problem.acceptablePlayingStreak)
+        val playingStreak = PlayingStreak(schedule)
+        val playingStreakInRange = playingStreak.scorer(problem.acceptablePlayingStreak)
 
         val minimumTotalPairFrequency =
             run {
                 val target = problem.averagePairs(problem.numberOfRounds).toInt()
-                FrequencyScorer(
-                    scoreFun = greaterThanOrEqualTo(target),
-                    label = "Final pair frequency < $target",
+                ObservationScorer(
+                    observationScore = greaterThanOrEqualTo(target),
+                    label = "Final pair frequency >= $target",
                 ) { pairs.frequencies().values }
-            }
-
-        val intermediatePairFrequency =
-            intermediateRounds.map { roundNumber ->
-                val target = problem.averagePairs(roundNumber).toInt()
-                FrequencyScorer(
-                    scoreFun = greaterThanOrEqualTo(target),
-                    label = "Pair frequency until round $roundNumber",
-                ) { pairs.frequencies(0, roundNumber).values }
             }
 
         val weightedSumScorer =
             WeightedSumScorer().apply {
                 add(10.0, minimumTotalMatchesPlayed)
-                add(10.0, playingStreak)
-
+                add(10.0, playingStreakInRange)
                 add(2.0, minimumTotalPairFrequency)
-                // intermediatePairFrequency.forEach { add(0.5, it) }
             }
 
         return weightedSumScorer

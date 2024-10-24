@@ -2,12 +2,12 @@ package score
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.ruud.score.FrequencyScorer
+import org.ruud.score.ObservationScorer
 import org.ruud.score.greaterThanOrEqualTo
 import org.ruud.score.inRange
 import org.ruud.score.lessThanOrEqualTo
 
-class FrequencyScorerTest {
+class ObservationScorerTest {
     @Test
     fun lessThanOrEqualToTest() {
         val scoreFun = lessThanOrEqualTo(3)
@@ -43,7 +43,7 @@ class FrequencyScorerTest {
     @Test
     fun `returns total score of frequencies`() {
         val scoreFun = lessThanOrEqualTo(2)
-        val scorer = FrequencyScorer(scoreFun) { listOf(0, 1, 2, 3, 4) }
+        val scorer = ObservationScorer(scoreFun) { listOf(0, 1, 2, 3, 4) }
 
         assertThat(scorer()).isEqualTo((1 + 2).toDouble())
     }
