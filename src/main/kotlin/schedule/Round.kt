@@ -14,21 +14,36 @@ class Round(
     }
 
     val size = players.size
+
     private val numberOfMatches = players.size / playersPerMatch
+
     private val numberPlaying = playersPerMatch * numberOfMatches
+
     private val players = players.toMutableList()
 
-    val playing: List<Int>
-        get() = players.subList(0, numberPlaying)
+    var playing: List<Int> = emptyList()
+        private set
 
-    val idle: List<Int>
-        get() = players.subList(numberPlaying, players.size)
+    var idle: List<Int> = emptyList()
+        private set
 
-    val pairs: Collection<Pair<Int, Int>>
-        get() =
+    var pairs: Collection<Pair<Int, Int>> = emptyList()
+        private set
+
+    private fun update() {
+        playing = players.subList(0, numberPlaying)
+
+        idle = players.subList(numberPlaying, players.size)
+
+        pairs =
             (0 until numberOfMatches).flatMap { index ->
                 playersInMatch(index).pairs()
             }
+    }
+
+    init {
+        update()
+    }
 
     private fun playersInMatch(index: Int) = players.subList(index * playersPerMatch, (index + 1) * playersPerMatch)
 
@@ -41,10 +56,12 @@ class Round(
         j: Int,
     ) {
         players[i] = players[j].also { players[j] = players[i] }
+        update()
     }
 
     fun rotate(steps: Int) {
         Collections.rotate(players, steps)
+        update()
     }
 
     override fun equals(other: Any?): Boolean = other is Round && players == other.players
