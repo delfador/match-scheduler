@@ -42,4 +42,15 @@ class Schedule(
                 appendLine("$roundLabel: $round")
             }
         }
+
+    companion object {
+        fun random(problem: Problem): Schedule =
+            with(problem) {
+                val rounds =
+                    List(numberOfRounds) {
+                        Round.random(numberOfPlayers = numberOfPlayers, playersPerMatch = playersPerMatch)
+                    }
+                Schedule(rounds)
+            }
+    }
 }

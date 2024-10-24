@@ -1,7 +1,6 @@
 package org.ruud
 
 import org.ruud.schedule.Problem
-import org.ruud.schedule.RandomInitializer
 import org.ruud.schedule.Reporter
 import org.ruud.schedule.Schedule
 import org.ruud.schedule.ScheduleSolution
@@ -25,7 +24,7 @@ fun main() {
     val initialSolution =
         ScheduleSolution(
             problem = problem,
-            schedule = RandomInitializer(problem).create(),
+            schedule = Schedule.random(problem),
             scorerFactory = BasicScorerFactory(problem),
             moveSelector =
                 MoveSelector(
