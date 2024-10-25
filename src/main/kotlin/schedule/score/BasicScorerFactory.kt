@@ -19,24 +19,24 @@ class BasicScorerFactory(
 
     private fun minimumTotalPairFrequency(schedule: Schedule): ObservationScorer {
         val pairs = RoundFrequency(schedule) { it.pairs }
+        val target = problem.averagePairs(problem.numberOfRounds).toInt()
+        val range = target..target + 1
         val minimumTotalPairFrequency =
-            run {
-                val target = problem.averagePairs(problem.numberOfRounds).toInt()
-                ObservationScorer(
-                    observationScore = greaterThanOrEqualTo(target),
-                    label = "Final pair frequency >= $target",
-                ) { pairs.frequencies().values }
-            }
+            ObservationScorer(
+                observationScore = inRange(range),
+                label = "Final pair frequency in $range",
+            ) { pairs.frequencies().values }
         return minimumTotalPairFrequency
     }
 
     private fun minimumTotalMatchesPlayed(schedule: Schedule): ObservationScorer {
         val matchesPlayed = RoundFrequency(schedule) { it.playing }
         val targetMatchesPlayed = problem.averageMatchesPlayed(problem.numberOfRounds).toInt()
+        val range = targetMatchesPlayed..targetMatchesPlayed + 1
         val minimumTotalMatchesPlayed =
             ObservationScorer(
-                observationScore = greaterThanOrEqualTo(targetMatchesPlayed),
-                label = "Total matches played >= $targetMatchesPlayed",
+                observationScore = inRange(range),
+                label = "Total matches played in $range",
             ) { matchesPlayed.frequencies().values }
         return minimumTotalMatchesPlayed
     }
