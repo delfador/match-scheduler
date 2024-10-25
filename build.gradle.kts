@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
     testImplementation("org.assertj:assertj-core:3.26.3")
     testImplementation(kotlin("test"))
 }
