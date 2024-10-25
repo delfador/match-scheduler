@@ -25,14 +25,12 @@ class Anneal<S, M> {
             val newScore = solution.score()
 
             if (acceptMove(newScore, currentScore, temperature)) {
-                println("$iter, $temperature: accept $newScore")
                 currentScore = newScore
             } else {
                 solution.undo(move)
             }
 
             if (newScore < bestScore) {
-                println("$iter, $temperature: new best $newScore")
                 bestScore = newScore
                 bestSolution = solution.copy()
             }
