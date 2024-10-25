@@ -28,7 +28,7 @@ class Reporter(
     private fun playingStreaks(schedule: Schedule) =
         buildString {
             appendLine("PLAYING STREAKS (excluding start/end boundaries)")
-            val playingStreaksByPlayer = PlayingStreak(schedule).playingStreaksByPlayer()
+            val playingStreaksByPlayer = PlayingStreak(schedule).playingStreaksByPlayer().toSortedMap()
             playingStreaksByPlayer.forEach { (player, streaks) ->
                 val minimumStreak = streaks.minOrNull()
                 val maximumStreak = streaks.maxOrNull()
@@ -74,7 +74,7 @@ class Reporter(
                 }
 
         return buildString {
-            appendLine("MATCH FREQUENCIES")
+            appendLine("MATCH FREQUENCY")
             matchesByFrequency.forEach { (frequency, matches) ->
                 val matchString =
                     if (matches.size > 4) {
