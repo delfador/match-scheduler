@@ -13,6 +13,12 @@ import solver.Solution
 class ProblemSolver(
     private val problem: Problem,
 ) {
+    data class Result(
+        val schedule: Schedule,
+        val score: Double,
+        val detailScore: String,
+    )
+
     private val scorerFactory =
         BasicScorerFactory(
             problem = problem,
@@ -30,7 +36,7 @@ class ProblemSolver(
             ),
         )
 
-    fun solve(): Schedule {
+    fun solve(): Result {
         val solutions =
             runBlocking(Dispatchers.Default) {
                 List(Runtime.getRuntime().availableProcessors()) {
@@ -38,23 +44,29 @@ class ProblemSolver(
                 }.map { it.await() }
             }
 
+        val scores = solutions.joinToString(", ") { it.score().toString() }
+        println("Scores: $scores")
+
         val solution = solutions.minBy { it.score() }
         val schedule = solution.getState()
-        return schedule
+
+        return Result(
+            schedule,
+            solution.score(),
+            solution.detailScore(),
+        )
     }
 
     private fun solveWithAnneal(): Solution<Schedule, Move> {
         val schedule = Schedule.random(problem)
         val initialSolution = ScheduleSolution(problem, schedule, scorerFactory, moveSelector)
 
-        val solution =
-            Anneal<Schedule, Move>().solve(
-                initialSolution = initialSolution,
-                initialTemperature = 56.0,
-                coolingRate = 0.994,
-                coolingInterval = 100,
-                maxIter = 100_000,
-            )
-        return solution
+        return Anneal<Schedule, Move>().solve(
+            initialSolution = initialSolution,
+            initialTemperature = 56.0,
+            coolingRate = 0.994,
+            coolingInterval = 100,
+            maxIter = 100_000,
+        )
     }
 }

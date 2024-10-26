@@ -14,7 +14,9 @@ fun main() {
 
     val problem = Problem(numberOfPlayers, numberOfRounds, playersPerMatch)
     val solver = ProblemSolver(problem)
-    val schedule = solver.solve()
+    val result = solver.solve()
+    val schedule = result.schedule
     val reporter = Reporter(problem)
     println(reporter.report(schedule))
+    println(result.detailScore)
 }
