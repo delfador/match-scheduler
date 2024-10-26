@@ -13,7 +13,9 @@ class BasicScorerFactory(
     override fun create(schedule: Schedule): Scorer =
         WeightedSumScorer().apply {
             add(totalMatchesPlayedWeight, minimumTotalMatchesPlayed(schedule))
-            add(playingStreakWeight, PlayingStreak(schedule).scorer(problem.acceptablePlayingStreak))
+            if (problem.idlePlayersPerRound > 0) {
+                add(playingStreakWeight, PlayingStreak(schedule).scorer(problem.acceptablePlayingStreak))
+            }
             add(pairFrequencyWeight, minimumTotalPairFrequency(schedule))
         }
 
