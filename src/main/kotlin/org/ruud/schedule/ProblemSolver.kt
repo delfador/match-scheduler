@@ -4,8 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import org.ruud.schedule.move.Move
-import org.ruud.schedule.move.MoveSelector
-import org.ruud.schedule.move.MoveType
+import org.ruud.schedule.move.MoveWeights
 import org.ruud.schedule.score.BasicScorerFactory
 import org.ruud.schedule.score.ScoringWeights
 import org.ruud.solver.Anneal
@@ -14,6 +13,7 @@ import org.ruud.solver.Solution
 class ProblemSolver(
     private val problem: Problem,
     scoringWeights: ScoringWeights = ScoringWeights(),
+    moveWeights: MoveWeights = MoveWeights(),
     private val parallelSolvers: Int = Runtime.getRuntime().availableProcessors(),
 ) {
     data class Result(
@@ -24,14 +24,7 @@ class ProblemSolver(
 
     private val scorerFactory = BasicScorerFactory(problem, scoringWeights)
 
-    private val moveSelector =
-        MoveSelector(
-            mapOf(
-                MoveType.SwapPlayer to 10.0,
-                // 1.0 to MoveType.RotatePlayers,
-                MoveType.SwapRound to 5.0,
-            ),
-        )
+    private val moveSelector = moveWeights.toMoveSelector()
 
     fun solve(): Result {
         val solutions =
