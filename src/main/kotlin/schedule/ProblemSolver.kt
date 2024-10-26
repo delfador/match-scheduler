@@ -12,6 +12,7 @@ import solver.Solution
 
 class ProblemSolver(
     private val problem: Problem,
+    private val parallelSolvers: Int = Runtime.getRuntime().availableProcessors(),
 ) {
     data class Result(
         val schedule: Schedule,
@@ -19,13 +20,7 @@ class ProblemSolver(
         val detailScore: String,
     )
 
-    private val scorerFactory =
-        BasicScorerFactory(
-            problem = problem,
-            totalMatchesPlayedWeight = 6.0,
-            playingStreakWeight = 5.0,
-            pairFrequencyWeight = 1.0,
-        )
+    private val scorerFactory = BasicScorerFactory(problem = problem)
 
     private val moveSelector =
         MoveSelector(
@@ -39,7 +34,7 @@ class ProblemSolver(
     fun solve(): Result {
         val solutions =
             runBlocking(Dispatchers.Default) {
-                List(Runtime.getRuntime().availableProcessors()) {
+                List(parallelSolvers) {
                     async { solveWithAnneal() }
                 }.map { it.await() }
             }

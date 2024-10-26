@@ -6,17 +6,15 @@ import org.ruud.schedule.Schedule
 
 class BasicScorerFactory(
     private val problem: Problem,
-    private val totalMatchesPlayedWeight: Double,
-    private val playingStreakWeight: Double,
-    private val pairFrequencyWeight: Double,
+    private val scoreWeights: ScoringWeights = ScoringWeights(),
 ) : ScorerFactory {
     override fun create(schedule: Schedule): Scorer =
         WeightedSumScorer().apply {
-            add(totalMatchesPlayedWeight, minimumTotalMatchesPlayed(schedule))
+            add(scoreWeights.totalMatchesPlayedWeight, minimumTotalMatchesPlayed(schedule))
             if (problem.idlePlayersPerRound > 0) {
-                add(playingStreakWeight, PlayingStreak(schedule).scorer(problem.acceptablePlayingStreak))
+                add(scoreWeights.playingStreakWeight, PlayingStreak(schedule).scorer(problem.acceptablePlayingStreak))
             }
-            add(pairFrequencyWeight, minimumTotalPairFrequency(schedule))
+            add(scoreWeights.pairFrequencyWeight, minimumTotalPairFrequency(schedule))
         }
 
     private fun minimumTotalPairFrequency(schedule: Schedule): ObservationScorer {
