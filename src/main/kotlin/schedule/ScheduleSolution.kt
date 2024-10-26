@@ -6,7 +6,6 @@ import org.ruud.schedule.score.ScorerFactory
 import solver.Solution
 
 class ScheduleSolution(
-    private val problem: Problem,
     private val schedule: Schedule,
     private val scorerFactory: ScorerFactory,
     private val moveSelector: MoveSelector,
@@ -29,5 +28,5 @@ class ScheduleSolution(
         move.undo(schedule)
     }
 
-    override fun copy(): Solution<Schedule, Move> = ScheduleSolution(problem, schedule.copy(), scorerFactory, moveSelector)
+    override fun copy(): Solution<Schedule, Move> = ScheduleSolution(schedule.copy(), scorerFactory, moveSelector)
 }

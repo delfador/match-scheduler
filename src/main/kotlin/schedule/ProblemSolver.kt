@@ -59,7 +59,7 @@ class ProblemSolver(
 
     private fun solveWithAnneal(): Solution<Schedule, Move> {
         val schedule = Schedule.random(problem)
-        val initialSolution = ScheduleSolution(problem, schedule, scorerFactory, moveSelector)
+        val initialSolution = ScheduleSolution(schedule, scorerFactory, moveSelector)
 
         return Anneal<Schedule, Move>().solve(
             initialSolution = initialSolution,
