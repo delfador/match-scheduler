@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 import org.ruud.schedule.Problem
 import org.ruud.schedule.Schedule
 import org.ruud.schedule.move.Move
-import org.ruud.schedule.move.MoveSelector
 import org.ruud.schedule.move.MoveType
 import org.ruud.schedule.move.RotatePlayers
 import org.ruud.schedule.move.SwapPlayerPositions
@@ -17,14 +16,13 @@ class MoveSelectorTest {
     fun `should yield move fractions close to weight fractions`() {
         val problem = Problem(6, 2, 4)
         val schedule = Schedule.random(problem)
-        val moveSelector =
-            MoveSelector(
-                mapOf(
-                    MoveType.SwapPlayer to 6.0,
-                    MoveType.RotatePlayers to 1.0,
-                    MoveType.SwapRound to 3.0,
-                ),
+        val moveWeights =
+            MoveWeights(
+                swapPlayerWeight = 6.0,
+                rotatePlayersWeight = 1.0,
+                swapRoundWeight = 3.0,
             )
+        val moveSelector = moveWeights.toMoveSelector()
 
         val numberOfMoves = 1_000
         val movesFractions =
