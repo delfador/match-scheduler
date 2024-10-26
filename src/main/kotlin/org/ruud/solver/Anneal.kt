@@ -1,6 +1,5 @@
 package org.ruud.solver
 
-import solver.Solution
 import kotlin.math.exp
 import kotlin.random.Random
 

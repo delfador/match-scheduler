@@ -1,4 +1,4 @@
-package solver
+package org.ruud.solver
 
 interface Solution<S, M> {
     fun score(): Double

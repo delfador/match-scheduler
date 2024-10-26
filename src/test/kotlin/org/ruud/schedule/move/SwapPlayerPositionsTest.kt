@@ -1,10 +1,9 @@
-package schedule.move
+package org.ruud.schedule.move
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.ruud.schedule.Round
 import org.ruud.schedule.Schedule
-import org.ruud.schedule.move.SwapPlayerPositions
 
 class SwapPlayerPositionsTest {
     private val rounds =

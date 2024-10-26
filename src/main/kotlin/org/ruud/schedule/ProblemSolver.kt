@@ -9,7 +9,7 @@ import org.ruud.schedule.move.MoveType
 import org.ruud.schedule.score.BasicScorerFactory
 import org.ruud.schedule.score.ScoringWeights
 import org.ruud.solver.Anneal
-import solver.Solution
+import org.ruud.solver.Solution
 
 class ProblemSolver(
     private val problem: Problem,

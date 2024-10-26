@@ -1,10 +1,8 @@
-package schedule
+package org.ruud.schedule
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.ruud.schedule.Round
-import org.ruud.schedule.Schedule
 
 class ScheduleTest {
     @Test

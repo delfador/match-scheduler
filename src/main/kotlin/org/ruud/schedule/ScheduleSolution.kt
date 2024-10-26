@@ -3,7 +3,7 @@ package org.ruud.schedule
 import org.ruud.schedule.move.Move
 import org.ruud.schedule.move.MoveSelector
 import org.ruud.schedule.score.ScorerFactory
-import solver.Solution
+import org.ruud.solver.Solution
 
 class ScheduleSolution(
     private val schedule: Schedule,

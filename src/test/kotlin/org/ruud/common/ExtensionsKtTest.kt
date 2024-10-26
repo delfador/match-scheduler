@@ -1,8 +1,7 @@
-package common
+package org.ruud.common
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.ruud.common.pairs
 
 class ExtensionsKtTest {
     @Test

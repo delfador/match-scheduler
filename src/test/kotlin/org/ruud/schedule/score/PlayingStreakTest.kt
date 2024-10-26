@@ -1,10 +1,9 @@
-package schedule.score
+package org.ruud.schedule.score
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.ruud.schedule.Round
 import org.ruud.schedule.Schedule
-import org.ruud.schedule.score.PlayingStreak
 
 class PlayingStreakTest {
     @Test

@@ -1,7 +1,4 @@
-package schedule.move
-
-import org.ruud.schedule.move.MoveSelector
-import org.ruud.schedule.move.MoveType
+package org.ruud.schedule.move
 
 data class MoveWeights(
     val swapPlayerWeight: Double,

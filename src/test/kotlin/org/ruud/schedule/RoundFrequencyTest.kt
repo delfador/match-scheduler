@@ -1,10 +1,7 @@
-package schedule
+package org.ruud.schedule
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.ruud.schedule.Round
-import org.ruud.schedule.RoundFrequency
-import org.ruud.schedule.Schedule
 
 class RoundFrequencyTest {
     private val rounds =

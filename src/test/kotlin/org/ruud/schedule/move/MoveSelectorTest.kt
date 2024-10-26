@@ -1,15 +1,10 @@
-package schedule.move
+package org.ruud.schedule.move
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.within
 import org.junit.jupiter.api.Test
 import org.ruud.schedule.Problem
 import org.ruud.schedule.Schedule
-import org.ruud.schedule.move.Move
-import org.ruud.schedule.move.MoveType
-import org.ruud.schedule.move.RotatePlayers
-import org.ruud.schedule.move.SwapPlayerPositions
-import org.ruud.schedule.move.SwapRounds
 
 class MoveSelectorTest {
     @Test
@@ -38,9 +33,9 @@ class MoveSelectorTest {
 
     private fun Move.moveType(): MoveType =
         when (this) {
-            is SwapPlayerPositions -> MoveType.SwapPlayer
-            is RotatePlayers -> MoveType.RotatePlayers
-            is SwapRounds -> MoveType.SwapRound
+            is SwapPlayerPositions -> org.ruud.schedule.move.MoveType.SwapPlayer
+            is RotatePlayers -> org.ruud.schedule.move.MoveType.RotatePlayers
+            is SwapRounds -> org.ruud.schedule.move.MoveType.SwapRound
             else -> throw NotImplementedError("Unknown move type: $this")
         }
 }

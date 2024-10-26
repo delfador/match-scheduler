@@ -1,12 +1,11 @@
-package schedule.move
+package org.ruud.schedule.move
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.ruud.schedule.Round
 import org.ruud.schedule.Schedule
-import org.ruud.schedule.move.RotatePlayers
 
-class RotatePlayersTest {
+class SwapRoundsTest {
     private val rounds =
         listOf(
             Round.regular(10, 4),
@@ -17,20 +16,24 @@ class RotatePlayersTest {
 
     @Test
     fun `should perform the configured swap`() {
-        val move = RotatePlayers(round = 0, steps = 2)
+        val move = SwapRounds(0, 2)
 
         move.execute(schedule)
 
-        assertThat(schedule.rounds[0]).isEqualTo(Round(listOf(8, 9, 0, 1, 2, 3, 4, 5, 6, 7), 4))
-        assertThat(schedule.rounds[1]).isEqualTo(rounds[1])
-        assertThat(schedule.rounds[2]).isEqualTo(rounds[2])
+        assertThat(schedule.rounds).isEqualTo(
+            listOf(
+                rounds[2],
+                rounds[1],
+                rounds[0],
+            ),
+        )
     }
 
     @Test
     fun `should return to original schedule after execute and undo`() {
         val scheduleCopy = schedule.copy()
 
-        val move = RotatePlayers(round = 0, steps = 2)
+        val move = SwapRounds(0, 2)
         move.execute(schedule)
         move.undo(schedule)
 

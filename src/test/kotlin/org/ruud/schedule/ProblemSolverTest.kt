@@ -1,9 +1,7 @@
-package schedule
+package org.ruud.schedule
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.ruud.schedule.Problem
-import org.ruud.schedule.ProblemSolver
 
 class ProblemSolverTest {
     @Test
