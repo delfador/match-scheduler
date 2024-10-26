@@ -7,11 +7,13 @@ import org.ruud.schedule.move.Move
 import org.ruud.schedule.move.MoveSelector
 import org.ruud.schedule.move.MoveType
 import org.ruud.schedule.score.BasicScorerFactory
+import org.ruud.schedule.score.ScoringWeights
 import org.ruud.solver.Anneal
 import solver.Solution
 
 class ProblemSolver(
     private val problem: Problem,
+    scoringWeights: ScoringWeights = ScoringWeights(),
     private val parallelSolvers: Int = Runtime.getRuntime().availableProcessors(),
 ) {
     data class Result(
@@ -20,14 +22,14 @@ class ProblemSolver(
         val detailScore: String,
     )
 
-    private val scorerFactory = BasicScorerFactory(problem = problem)
+    private val scorerFactory = BasicScorerFactory(problem, scoringWeights)
 
     private val moveSelector =
         MoveSelector(
-            listOf(
-                10.0 to MoveType.SwapPlayer,
+            mapOf(
+                MoveType.SwapPlayer to 10.0,
                 // 1.0 to MoveType.RotatePlayers,
-                5.0 to MoveType.SwapRound,
+                MoveType.SwapRound to 5.0,
             ),
         )
 
