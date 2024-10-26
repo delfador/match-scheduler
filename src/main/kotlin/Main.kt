@@ -27,9 +27,9 @@ fun main() {
     val scorerFactory =
         BasicScorerFactory(
             problem = problem,
-            totalMatchesPlayedWeight = 20.0,
-            playingStreakWeight = 10.0,
-            pairFrequencyWeight = 2.0,
+            totalMatchesPlayedWeight = 6.0,
+            playingStreakWeight = 5.0,
+            pairFrequencyWeight = 1.0,
         )
 
     val moveSelector =
@@ -63,10 +63,14 @@ private fun optimizeSchedule(
     moveSelector: MoveSelector,
 ): Solution<Schedule, Move> {
     val initialSolution = ScheduleSolution(problem, Schedule.random(problem), scorerFactory, moveSelector)
-    return Anneal<Schedule, Move>().solve(
-        initialSolution = initialSolution,
-        initialTemperature = 10_000.0,
-        coolingRate = 0.9999,
-        maxIter = 100_000,
-    )
+
+    val solution =
+        Anneal<Schedule, Move>().solve(
+            initialSolution = initialSolution,
+            initialTemperature = 56.0,
+            coolingRate = 0.994,
+            coolingInterval = 100,
+            maxIter = 100_000,
+        )
+    return solution
 }

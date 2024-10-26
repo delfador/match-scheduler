@@ -9,6 +9,7 @@ class Anneal<S, M> {
         initialSolution: Solution<S, M>,
         initialTemperature: Double,
         coolingRate: Double,
+        coolingInterval: Int,
         maxIter: Int,
     ): Solution<S, M> {
         val solution = initialSolution.copy()
@@ -36,7 +37,9 @@ class Anneal<S, M> {
             }
 
             iter++
-            temperature *= coolingRate
+            if (iter % coolingInterval == 0) {
+                temperature *= coolingRate
+            }
         }
 
         return bestSolution
