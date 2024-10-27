@@ -44,17 +44,19 @@ class Anneal<S, M> {
         return bestSolution
     }
 
-    private fun acceptMove(
-        newScore: Double,
-        currentScore: Double,
-        temperature: Double,
-    ): Boolean {
-        if (newScore <= currentScore) {
-            return true
-        }
+    companion object {
+        private fun acceptMove(
+            newScore: Double,
+            currentScore: Double,
+            temperature: Double,
+        ): Boolean {
+            if (newScore <= currentScore) {
+                return true
+            }
 
-        val probability = exp(-(newScore - currentScore) / temperature)
-        val uniform = Random.nextDouble()
-        return uniform <= probability
+            val probability = exp(-(newScore - currentScore) / temperature)
+            val uniform = Random.nextDouble()
+            return uniform <= probability
+        }
     }
 }
