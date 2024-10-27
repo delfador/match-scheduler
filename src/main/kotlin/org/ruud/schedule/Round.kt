@@ -51,6 +51,8 @@ class Round(
 
     override fun toString() = (allMatches() + listOf(idle)).joinToString(", ") { it.toString() }
 
+    fun toCsv() = players.joinToString(", ") { it.toString() }
+
     fun swapPositions(
         i: Int,
         j: Int,

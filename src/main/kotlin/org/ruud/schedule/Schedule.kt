@@ -43,6 +43,8 @@ class Schedule(
             }
         }
 
+    fun toCsv(): String = rounds.joinToString("\n") { it.toCsv() }
+
     companion object {
         fun random(problem: Problem): Schedule =
             with(problem) {
