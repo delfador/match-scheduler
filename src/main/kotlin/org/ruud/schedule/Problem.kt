@@ -44,8 +44,10 @@ data class Problem(
             appendLine("Payers per match: $playersPerMatch")
             appendLine("Playing players per round: $playersPerRound")
             appendLine("Idle players per round: $idlePlayersPerRound")
+            if (idlePlayersPerRound > 0) {
+                appendLine("Ideal playing streak: ${idealPlayingStreak.format(2)} rounds")
+                appendLine("Acceptable playing streak: $acceptablePlayingStreak (excluding start/end boundaries)")
+            }
             appendLine("Average pair frequency after $numberOfRounds rounds: ${averagePairs(numberOfRounds).format(2)}")
-            appendLine("Ideal playing streak: ${idealPlayingStreak.format(2)} rounds")
-            appendLine("Acceptable playing streak: $acceptablePlayingStreak (excluding start/end boundaries)")
         }
 }

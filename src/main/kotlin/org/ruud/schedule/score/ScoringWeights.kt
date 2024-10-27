@@ -1,5 +1,8 @@
 package org.ruud.schedule.score
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class ScoringWeights(
     val totalMatchesPlayedWeight: Double = 6.0,
     val playingStreakWeight: Double = 5.0,

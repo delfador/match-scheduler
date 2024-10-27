@@ -1,5 +1,8 @@
 package org.ruud.schedule.move
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class MoveWeights(
     val swapPlayerWeight: Double = 10.0,
     val rotatePlayersWeight: Double = 0.0,

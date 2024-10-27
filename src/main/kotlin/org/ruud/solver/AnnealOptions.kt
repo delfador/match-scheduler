@@ -1,8 +1,10 @@
 package org.ruud.solver
 
+import kotlinx.serialization.Serializable
 import kotlin.math.exp
 import kotlin.math.ln
 
+@Serializable
 data class AnnealOptions(
     val initialTemperature: Double = 50.0,
     val coolingRate: Double = 0.9999,
