@@ -7,7 +7,7 @@ class ProblemSolverTest {
     @Test
     fun `should solve a simple problem`() {
         val problem = Problem(numberOfPlayers = 6, numberOfRounds = 8, playersPerMatch = 4)
-        val problemSolver = ProblemSolver(problem, parallelSolvers = 1)
+        val problemSolver = ProblemSolver(problem)
         val result = problemSolver.solve()
 
         val schedule = result.schedule

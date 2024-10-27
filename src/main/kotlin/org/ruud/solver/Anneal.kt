@@ -3,14 +3,12 @@ package org.ruud.solver
 import kotlin.math.exp
 import kotlin.random.Random
 
-class Anneal<S, M> {
-    fun solve(
-        initialSolution: Solution<S, M>,
-        initialTemperature: Double,
-        coolingRate: Double,
-        coolingInterval: Int,
-        maxIter: Int,
-    ): Solution<S, M> {
+class Anneal<S, M>(
+    private val initialTemperature: Double,
+    private val coolingRate: Double,
+    private val maxIter: Int,
+) {
+    fun solve(initialSolution: Solution<S, M>): Solution<S, M> {
         val solution = initialSolution.copy()
         var currentScore = solution.score()
         var bestSolution = initialSolution.copy()
@@ -36,9 +34,7 @@ class Anneal<S, M> {
             }
 
             iter++
-            if (iter % coolingInterval == 0) {
-                temperature *= coolingRate
-            }
+            temperature *= coolingRate
         }
 
         return bestSolution
@@ -54,9 +50,18 @@ class Anneal<S, M> {
                 return true
             }
 
-            val probability = exp(-(newScore - currentScore) / temperature)
+            val probability = acceptanceProbability(newScore, currentScore, temperature)
             val uniform = Random.nextDouble()
             return uniform <= probability
+        }
+
+        fun acceptanceProbability(
+            newScore: Double,
+            currentScore: Double,
+            temperature: Double,
+        ): Double {
+            val probability = exp(-(newScore - currentScore) / temperature)
+            return probability
         }
     }
 }

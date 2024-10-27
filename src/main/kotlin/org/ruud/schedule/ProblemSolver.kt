@@ -8,13 +8,14 @@ import org.ruud.schedule.move.MoveWeights
 import org.ruud.schedule.score.BasicScorerFactory
 import org.ruud.schedule.score.ScoringWeights
 import org.ruud.solver.Anneal
+import org.ruud.solver.AnnealOptions
 import org.ruud.solver.Solution
 
 class ProblemSolver(
     private val problem: Problem,
     scoringWeights: ScoringWeights = ScoringWeights(),
     moveWeights: MoveWeights = MoveWeights(),
-    private val parallelSolvers: Int = Runtime.getRuntime().availableProcessors(),
+    annealOptions: AnnealOptions = AnnealOptions(),
 ) {
     data class Result(
         val schedule: Schedule,
@@ -25,6 +26,17 @@ class ProblemSolver(
     private val scorerFactory = BasicScorerFactory(problem, scoringWeights)
 
     private val moveSelector = moveWeights.toMoveSelector()
+
+    private val parallelSolvers = annealOptions.parallelSolvers
+
+    private val annealSolver =
+        with(annealOptions) {
+            Anneal<Schedule, Move>(
+                initialTemperature = initialTemperature,
+                coolingRate = coolingRate,
+                maxIter = maxIter,
+            )
+        }
 
     fun solve(): Result {
         val solutions =
@@ -50,13 +62,6 @@ class ProblemSolver(
     private fun solveWithAnneal(): Solution<Schedule, Move> {
         val schedule = Schedule.random(problem)
         val initialSolution = ScheduleSolution(schedule, scorerFactory, moveSelector)
-
-        return Anneal<Schedule, Move>().solve(
-            initialSolution = initialSolution,
-            initialTemperature = 56.0,
-            coolingRate = 0.994,
-            coolingInterval = 100,
-            maxIter = 100_000,
-        )
+        return annealSolver.solve(initialSolution = initialSolution)
     }
 }
