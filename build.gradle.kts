@@ -1,5 +1,10 @@
 plugins {
     kotlin("jvm") version "2.0.20"
+    application
+}
+
+application {
+    mainClass = "org.ruud.MainKt"
 }
 
 group = "org.ruud"
@@ -17,6 +22,9 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
 }
 kotlin {
     jvmToolchain(21)
