@@ -19,9 +19,10 @@ class RotatePlayers(
         fun random(
             numberOfRounds: Int,
             playersPerMatch: Int,
+            random: Random = Random,
         ): RotatePlayers {
-            val roundIndex = Random.nextInt(numberOfRounds)
-            val steps = Random.nextInt(1, playersPerMatch - 1)
+            val roundIndex = random.nextInt(numberOfRounds)
+            val steps = random.nextInt(1, playersPerMatch - 1)
             return RotatePlayers(roundIndex, steps)
         }
     }

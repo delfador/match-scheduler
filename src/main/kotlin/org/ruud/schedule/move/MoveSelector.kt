@@ -5,6 +5,7 @@ import kotlin.random.Random
 
 class MoveSelector(
     moveWeights: Map<MoveType, Double>,
+    private val random: Random = Random,
 ) {
     init {
         moveWeights.forEach { (moveType, weight) ->
@@ -26,9 +27,9 @@ class MoveSelector(
             }.drop(1)
 
     fun select(schedule: Schedule): Move {
-        val uniform = Random.nextDouble()
+        val uniform = random.nextDouble()
         val index = cumulativeProbability.indexOfFirst { probability -> uniform <= probability }
         val type = moveWeightPairs[index].first
-        return MoveType.create(schedule, type)
+        return MoveType.create(schedule, type, random)
     }
 }

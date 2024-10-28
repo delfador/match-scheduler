@@ -10,12 +10,14 @@ import org.ruud.schedule.score.ScoringWeights
 import org.ruud.solver.Anneal
 import org.ruud.solver.AnnealOptions
 import org.ruud.solver.Solution
+import kotlin.random.Random
 
 class ProblemSolver(
     private val problem: Problem,
     scoringWeights: ScoringWeights = ScoringWeights(),
-    moveWeights: MoveWeights = MoveWeights(),
-    annealOptions: AnnealOptions = AnnealOptions(),
+    private val moveWeights: MoveWeights = MoveWeights(),
+    private val annealOptions: AnnealOptions = AnnealOptions(),
+    private val random: Random = Random,
 ) {
     data class Result(
         val schedule: Schedule,
@@ -25,18 +27,7 @@ class ProblemSolver(
 
     private val scorerFactory = BasicScorerFactory(problem, scoringWeights)
 
-    private val moveSelector = moveWeights.toMoveSelector()
-
     private val parallelSolvers = annealOptions.parallelSolvers
-
-    private val annealSolver =
-        with(annealOptions) {
-            Anneal<Schedule, Move>(
-                initialTemperature = initialTemperature,
-                coolingRate = coolingRate,
-                maxIter = maxIter,
-            )
-        }
 
     fun solve(): Result {
         val solutions =
@@ -60,8 +51,24 @@ class ProblemSolver(
     }
 
     private fun solveWithAnneal(): Solution<Schedule, Move> {
-        val schedule = Schedule.random(problem)
+        val seed = random.nextInt()
+        val random = Random(seed)
+        val schedule = Schedule.random(problem, random)
+        val moveSelector = moveWeights.toMoveSelector(random)
         val initialSolution = ScheduleSolution(schedule, scorerFactory, moveSelector)
-        return annealSolver.solve(initialSolution = initialSolution)
+        val solver = getAnnealSolver(annealOptions, random)
+        return solver.solve(initialSolution = initialSolution)
+    }
+
+    private fun getAnnealSolver(
+        annealOptions: AnnealOptions,
+        random: Random,
+    ) = with(annealOptions) {
+        Anneal<Schedule, Move>(
+            initialTemperature = initialTemperature,
+            coolingRate = coolingRate,
+            maxIter = maxIter,
+            random = random,
+        )
     }
 }

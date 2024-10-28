@@ -1,6 +1,7 @@
 package org.ruud.schedule.move
 
 import kotlinx.serialization.Serializable
+import kotlin.random.Random
 
 @Serializable
 data class MoveWeights(
@@ -8,7 +9,7 @@ data class MoveWeights(
     val rotatePlayersWeight: Double = 0.0,
     val swapRoundWeight: Double = 5.0,
 ) {
-    fun toMoveSelector(): MoveSelector {
+    fun toMoveSelector(random: Random = Random): MoveSelector {
         val moveWeights =
             mapOf(
                 MoveType.SwapPlayer to swapPlayerWeight,
@@ -16,6 +17,6 @@ data class MoveWeights(
                 MoveType.SwapRound to swapRoundWeight,
             ).filterValues { it > 0.0 }
 
-        return MoveSelector(moveWeights)
+        return MoveSelector(moveWeights, random)
     }
 }

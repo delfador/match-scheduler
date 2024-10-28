@@ -7,6 +7,7 @@ class Anneal<S, M>(
     private val initialTemperature: Double,
     private val coolingRate: Double,
     private val maxIter: Int,
+    private val random: Random = Random,
 ) {
     fun solve(initialSolution: Solution<S, M>): Solution<S, M> {
         val solution = initialSolution.copy()
@@ -40,21 +41,21 @@ class Anneal<S, M>(
         return bestSolution
     }
 
-    companion object {
-        private fun acceptMove(
-            newScore: Double,
-            currentScore: Double,
-            temperature: Double,
-        ): Boolean {
-            if (newScore <= currentScore) {
-                return true
-            }
-
-            val probability = acceptanceProbability(newScore, currentScore, temperature)
-            val uniform = Random.nextDouble()
-            return uniform <= probability
+    private fun acceptMove(
+        newScore: Double,
+        currentScore: Double,
+        temperature: Double,
+    ): Boolean {
+        if (newScore <= currentScore) {
+            return true
         }
 
+        val probability = acceptanceProbability(newScore, currentScore, temperature)
+        val uniform = random.nextDouble()
+        return uniform <= probability
+    }
+
+    companion object {
         fun acceptanceProbability(
             newScore: Double,
             currentScore: Double,

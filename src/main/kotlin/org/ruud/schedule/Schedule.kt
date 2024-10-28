@@ -1,5 +1,7 @@
 package org.ruud.schedule
 
+import kotlin.random.Random
+
 class Schedule(
     rounds: List<Round>,
 ) {
@@ -46,11 +48,18 @@ class Schedule(
     fun toCsv(): String = rounds.joinToString("\n") { it.toCsv() }
 
     companion object {
-        fun random(problem: Problem): Schedule =
+        fun random(
+            problem: Problem,
+            random: Random = Random,
+        ): Schedule =
             with(problem) {
                 val rounds =
                     List(numberOfRounds) {
-                        Round.random(numberOfPlayers = numberOfPlayers, playersPerMatch = playersPerMatch)
+                        Round.random(
+                            numberOfPlayers = numberOfPlayers,
+                            playersPerMatch = playersPerMatch,
+                            random = random,
+                        )
                     }
                 Schedule(rounds)
             }

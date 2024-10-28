@@ -2,6 +2,8 @@ package org.ruud.schedule
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.ruud.solver.AnnealOptions
+import kotlin.random.Random
 
 class ProblemSolverTest {
     @Test
@@ -19,5 +21,23 @@ class ProblemSolverTest {
         val score = result.score
 
         assertThat(score).`as` { "Score should not be too bad." }.isLessThan(10.0)
+    }
+
+    @Test
+    fun `should be deterministic for fixed seed`() {
+        val problem = Problem(numberOfPlayers = 6, numberOfRounds = 8, playersPerMatch = 4)
+        val schedules =
+            List(2) {
+                val solver =
+                    ProblemSolver(
+                        problem,
+                        annealOptions = AnnealOptions(coolingRate = 0.99, maxIter = 100),
+                        random = Random(seed = 42),
+                    )
+                val solution = solver.solve()
+                solution.schedule
+            }
+
+        assertThat(schedules[0]).isEqualTo(schedules[1])
     }
 }

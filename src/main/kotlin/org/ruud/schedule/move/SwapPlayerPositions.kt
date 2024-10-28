@@ -21,13 +21,14 @@ class SwapPlayerPositions(
             numberOfPlayers: Int,
             numberOfRounds: Int,
             playersPerMatch: Int,
+            random: Random = Random,
         ): SwapPlayerPositions {
-            val roundIndex = Random.nextInt(numberOfRounds)
-            val index1 = Random.nextInt(numberOfPlayers)
-            var index2 = Random.nextInt(numberOfPlayers)
+            val roundIndex = random.nextInt(numberOfRounds)
+            val index1 = random.nextInt(numberOfPlayers)
+            var index2 = random.nextInt(numberOfPlayers)
 
             while (inSameMatch(index1, index2, playersPerMatch)) {
-                index2 = Random.nextInt(numberOfPlayers)
+                index2 = random.nextInt(numberOfPlayers)
             }
             return SwapPlayerPositions(roundIndex, index1, index2)
         }
