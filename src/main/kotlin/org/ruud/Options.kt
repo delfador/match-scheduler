@@ -15,4 +15,5 @@ data class Options(
     val parallelSolvers: Int = Runtime.getRuntime().availableProcessors(),
     val scheduleCsv: String = "schedule.csv",
     val scheduleDetails: String = "schedule-details.txt",
+    val randomSeed: Int? = null,
 )

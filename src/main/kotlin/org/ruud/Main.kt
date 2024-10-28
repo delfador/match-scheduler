@@ -7,11 +7,57 @@ import org.ruud.schedule.ProblemSolver
 import org.ruud.schedule.Reporter
 import org.ruud.solver.AnnealOptions
 import java.io.File
+import kotlin.random.Random
 
+private const val OPTIONS_FILENAME = "options.json"
 private val json = Json { encodeDefaults = true }
 
 fun main() {
-    val optionsFile = File("options.json")
+    println("\nPADEL SCHEDULER")
+    val options = getOptions()
+    println("Solving...")
+
+    val problem = Problem(options.numberOfPlayers, options.numberOfRounds, options.playersPerMatch)
+
+    val scoringWeights = options.scoringWeights
+
+    val annealOptions =
+        AnnealOptions.tunedFor(
+            highDelta = scoringWeights.maximumWeight(),
+            lowDelta = scoringWeights.minimumWeight(),
+            maxIter = options.maxIter,
+            parallelSolvers = options.parallelSolvers,
+        )
+
+    val random = options.randomSeed?.let { Random(it) } ?: Random
+
+    val solver =
+        ProblemSolver(
+            problem = problem,
+            scoringWeights = scoringWeights,
+            moveWeights = options.moveWeights,
+            annealOptions = annealOptions,
+            random = random,
+        )
+
+    val result = solver.solve()
+
+    val reporter = Reporter(problem)
+    val output =
+        buildString {
+            appendLine()
+            appendLine(reporter.report(result.schedule))
+            appendLine(result.detailScore)
+        }
+
+    println(output)
+    File(options.scheduleCsv).writeText(result.schedule.toCsv())
+    File(options.scheduleDetails).writeText(output)
+}
+
+private fun getOptions(): Options {
+    val optionsFile = File(OPTIONS_FILENAME)
+
     val defaultOptions =
         if (optionsFile.exists()) {
             try {
@@ -35,43 +81,8 @@ fun main() {
     print("Number of rounds (${defaultOptions.numberOfRounds}) > ")
     val numberOfRounds = readln().toIntOrNull() ?: defaultOptions.numberOfRounds
 
-    val options =
-        defaultOptions.copy(
-            numberOfPlayers = numberOfPlayers,
-            numberOfRounds = numberOfRounds,
-        )
-
-    println("Solving...")
-
-    val problem = Problem(options.numberOfPlayers, options.numberOfRounds, options.playersPerMatch)
-
-    val scoringWeights = options.scoringWeights
-
-    val annealOptions =
-        AnnealOptions.tunedFor(
-            highDelta = scoringWeights.maximumWeight(),
-            lowDelta = scoringWeights.minimumWeight(),
-            maxIter = options.maxIter,
-            parallelSolvers = options.parallelSolvers,
-        )
-
-    val solver =
-        ProblemSolver(
-            problem,
-            scoringWeights = scoringWeights,
-            moveWeights = options.moveWeights,
-            annealOptions = annealOptions,
-        )
-
-    val result = solver.solve()
-    File(options.scheduleCsv).writeText(result.schedule.toCsv())
-
-    val reporter = Reporter(problem)
-    val output =
-        buildString {
-            appendLine(reporter.report(result.schedule))
-            appendLine(result.detailScore)
-        }
-    File(options.scheduleDetails).writeText(output)
-    println(output)
+    return defaultOptions.copy(
+        numberOfPlayers = numberOfPlayers,
+        numberOfRounds = numberOfRounds,
+    )
 }
