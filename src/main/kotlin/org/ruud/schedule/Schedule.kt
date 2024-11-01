@@ -19,6 +19,7 @@ class Schedule(
     val numberOfRounds = rounds.size
     val numerOfPlayers = rounds.first().size
     val playersPerMatch = rounds.first().playersPerMatch
+    val matchesPerRound = numerOfPlayers / playersPerMatch
 
     private val _rounds = rounds.mapTo(mutableListOf()) { it.copy() }
     val rounds: List<Round> = _rounds
@@ -40,12 +41,31 @@ class Schedule(
         buildString {
             appendLine("SCHEDULE")
             rounds.forEachIndexed { index, round ->
-                val roundLabel = "$index".padStart(2)
+                val roundLabel = "${index + 1}".padStart(2)
                 appendLine("$roundLabel: $round")
             }
         }
 
     fun toCsv(): String = rounds.joinToString("\n") { it.toCsv() }
+
+    fun toMarkdown() =
+        buildString {
+            append("|Round")
+            (1..matchesPerRound).forEach { index ->
+                append("|Match $index")
+            }
+            appendLine("|Idle|")
+
+            append("|:-:")
+            (1..matchesPerRound + 1).forEach { index ->
+                append("|-")
+            }
+            appendLine("|")
+
+            rounds.forEachIndexed { index, round ->
+                appendLine("|${index + 1}${round.toMarkdown()}")
+            }
+        }
 
     companion object {
         fun random(

@@ -20,7 +20,7 @@ class Reporter(
             appendLine("MATCHES PLAYED")
             val matchesPlayed = RoundFrequency(schedule) { it.playing }
             for (index in schedule.rounds.indices) {
-                val roundLabel = "$index".padStart(2)
+                val roundLabel = "${index + 1}".padStart(2)
                 val playCount = matchesPlayed.frequencies(0, index + 1).toSortedMap()
                 appendLine("$roundLabel: $playCount")
             }

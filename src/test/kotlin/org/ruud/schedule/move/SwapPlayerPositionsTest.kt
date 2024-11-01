@@ -20,7 +20,7 @@ class SwapPlayerPositionsTest {
 
         move.execute(schedule)
 
-        assertThat(schedule.rounds[0]).isEqualTo(Round(listOf(9, 1, 2, 3, 4, 5, 6, 7, 8, 0), 4))
+        assertThat(schedule.rounds[0]).isEqualTo(Round(listOf(10, 2, 3, 4, 5, 6, 7, 8, 9, 1), 4))
         assertThat(schedule.rounds[1]).isEqualTo(rounds[1])
         assertThat(schedule.rounds[2]).isEqualTo(rounds[2])
     }

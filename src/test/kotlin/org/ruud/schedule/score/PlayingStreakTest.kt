@@ -17,23 +17,16 @@ class PlayingStreakTest {
                 Round.regular(6, 4, 1),
             )
         val schedule = Schedule(rounds)
-        /*
-             0: [0, 1, 2, 3], [4, 5]
-             1: [4, 5, 0, 1], [2, 3]
-             2: [2, 3, 4, 5], [0, 1]
-             3: [0, 1, 2, 3], [4, 5]
-             4: [5, 0, 1, 2], [3, 4]
-         */
 
         val playingStreak = PlayingStreak(schedule)
         val playingStreaksByPlayer = playingStreak.playingStreaksByPlayer()
 
         assertThat(playingStreaksByPlayer)
-            .containsEntry(0, emptyList())
             .containsEntry(1, emptyList())
             .containsEntry(2, emptyList())
-            .containsEntry(3, listOf(2))
-            .containsEntry(4, listOf(2, 0))
-            .containsEntry(5, listOf(2))
+            .containsEntry(3, emptyList())
+            .containsEntry(4, listOf(2))
+            .containsEntry(5, listOf(2, 0))
+            .containsEntry(6, listOf(2))
     }
 }

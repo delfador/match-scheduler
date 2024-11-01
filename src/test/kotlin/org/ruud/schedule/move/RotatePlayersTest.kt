@@ -20,7 +20,7 @@ class RotatePlayersTest {
 
         move.execute(schedule)
 
-        assertThat(schedule.rounds[0]).isEqualTo(Round(listOf(8, 9, 0, 1, 2, 3, 4, 5, 6, 7), 4))
+        assertThat(schedule.rounds[0]).isEqualTo(Round(listOf(9, 10, 1, 2, 3, 4, 5, 6, 7, 8), 4))
         assertThat(schedule.rounds[1]).isEqualTo(rounds[1])
         assertThat(schedule.rounds[2]).isEqualTo(rounds[2])
     }

@@ -31,13 +31,6 @@ class RoundTest {
     }
 
     @Test
-    fun `should throw exception if there set of players is not 0 to n`() {
-        assertThrows<IllegalArgumentException> {
-            Round(listOf(1, 2, 3, 4, 5), 4)
-        }
-    }
-
-    @Test
     fun `should throw exception players per match too large`() {
         assertThrows<IllegalArgumentException> {
             Round((0..2).toList(), 4)

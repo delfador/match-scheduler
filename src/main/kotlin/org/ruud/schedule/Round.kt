@@ -9,7 +9,7 @@ class Round(
     val playersPerMatch: Int,
 ) {
     init {
-        require(players.toSet() == players.indices.toSet())
+        require(players.distinct().size == players.size)
         require(players.size >= playersPerMatch)
     }
 
@@ -51,6 +51,15 @@ class Round(
 
     override fun toString() = (allMatches() + listOf(idle)).joinToString(", ") { it.toString() }
 
+    fun toMarkdown() =
+        buildString {
+            append("|")
+            (allMatches() + listOf(idle)).forEach { match ->
+                append(match.joinToString(", ") { "$it" })
+                append("|")
+            }
+        }
+
     fun toCsv() = players.joinToString(", ") { it.toString() }
 
     fun swapPositions(
@@ -78,7 +87,7 @@ class Round(
             playersPerMatch: Int,
             rotate: Int = 0,
         ): Round {
-            val players = (0 until numberOfPlayers).toList()
+            val players = (1..numberOfPlayers).toList()
             Collections.rotate(players, rotate)
             return Round(players, playersPerMatch)
         }
@@ -88,7 +97,7 @@ class Round(
             playersPerMatch: Int,
             random: Random = Random,
         ): Round {
-            val players = (0 until numberOfPlayers).shuffled(random)
+            val players = (1..numberOfPlayers).shuffled(random)
             return Round(players, playersPerMatch)
         }
     }
