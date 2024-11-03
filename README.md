@@ -73,8 +73,8 @@ possibility of varying doubles pairs in the latter case.
 
 The scheduler is a console application in build in
 [Kotlin](https://kotlinlang.org/) and to be able to run the application you will
-need **Java JDK version 21** for your system. If you don't have Java
-installed, you can pick a version [here](https://whichjdk.com/).
+need **Java JDK version 21** for your system. If you don't have Java installed,
+you can pick a version [here](https://whichjdk.com/).
 
 ### Source code
 
@@ -249,8 +249,25 @@ by randomly moving to neighboring states (neighbor schedules in our case)
 combined with a probabilistic acceptance criterion that should prevent the
 algorithm from getting stuck in a local optimum.
 
+The objective we are trying to optimizer is focussed on the three
+[scheduling goals](#scheduling-goals). Based on the problem's input data
+(number of players, number of rounds, and player per match), the scheduler
+determines a reasonable target for each goal. Any deviation from these targets
+will be penalized in the objective function.
+
+The algorithm can move from one schedule to a neighbor schedule by randomly
+choosing one of the following methods:
+
+- **Swap players:** randomly swap two players that are not in the same 
+  match for
+  a randomly chosen round.
+- **Rotate players:** rotate the sequence of players for a randomly chosen 
+  round.
+- **Swap rounds:** swap two randomly chosen rounds, keeping the matches in 
+  those rounds fixed.
+
 The probabilistic acceptance criterion is guided by the algorithm's
-"temperature". Tuning the temperature's cooling schedule and the problem's
+_temperature_. Tuning the temperature's cooling schedule and the problem's
 objective function is a crucial, but not straightforward endeavor. The match
 scheduler automatically tunes the cooling schedule, based upon the number of
 iteration and scoring weights. Even with the tuned settings, the algorithm still
