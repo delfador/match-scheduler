@@ -13,7 +13,7 @@ private const val OPTIONS_FILENAME = "options.json"
 private val json = Json { encodeDefaults = true }
 
 fun main() {
-    println("\nPADEL SCHEDULER")
+    println("\nMATCH SCHEDULER")
     val options = getOptions()
     println("Solving...")
 

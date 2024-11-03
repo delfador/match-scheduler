@@ -100,7 +100,7 @@ For instance, if you want to create a schedule for six players and twelve
 rounds, you'll see something like this.
 
 ```
-PADEL SCHEDULER
+MATCH SCHEDULER
 Number of players (10) > 6
 Number of rounds (20) > 12
 Solving...
