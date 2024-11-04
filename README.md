@@ -244,8 +244,8 @@ and optimization, please read on!
 
 The match scheduler optimizes the schedule using
 a [simulated annealing](https://en.wikipedia.org/wiki/Simulated_annealing)
-algorithm. This a _global optimization_ technique that explores the search space
-by randomly moving to neighboring states (neighbor schedules in our case)
+algorithm. This is a _global optimization_ technique that explores the search
+space by randomly moving to neighboring states (neighbor schedules in our case)
 combined with a probabilistic acceptance criterion that should prevent the
 algorithm from getting stuck in a local optimum.
 
@@ -258,13 +258,12 @@ will be penalized in the objective function.
 The algorithm can move from one schedule to a neighbor schedule by randomly
 choosing one of the following methods:
 
-- **Swap players:** randomly swap two players that are not in the same 
-  match for
+- **Swap players:** randomly swap two players that are not in the same match for
   a randomly chosen round.
-- **Rotate players:** rotate the sequence of players for a randomly chosen 
+- **Rotate players:** rotate the sequence of players for a randomly chosen
   round.
-- **Swap rounds:** swap two randomly chosen rounds, keeping the matches in 
-  those rounds fixed.
+- **Swap rounds:** swap two randomly chosen rounds, keeping the matches in those
+  rounds fixed.
 
 The probabilistic acceptance criterion is guided by the algorithm's
 _temperature_. Tuning the temperature's cooling schedule and the problem's
@@ -272,7 +271,7 @@ objective function is a crucial, but not straightforward endeavor. The match
 scheduler automatically tunes the cooling schedule, based upon the number of
 iteration and scoring weights. Even with the tuned settings, the algorithm still
 ends up at a local optimum sometimes, which is also why running the algorithm in
-parallel or multiple times might yield a better solutions.
+parallel or multiple times might yield a better solution.
 
 ## Examples
 
