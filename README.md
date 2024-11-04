@@ -79,12 +79,25 @@ you can pick a version [here](https://whichjdk.com/).
 ### Source code
 
 You can compile and run the application from the source code using
-[Gradle](https://gradle.org/).
+[Gradle](https://gradle.org/):
+
+```bash
+./gradlew run
+```
+
+or
+
+```
+.\gradlew.bat run
+```
 
 ### Distribution version
 
-Alternatively, you can download the distribution version, unzip the archive, and
-run the executable for your system from the `bin` directory.
+Alternatively, you can download the distribution version, unzip the
+[Package.zip](https://github.com/delfador/match-scheduler/releases/latest/download/Package.zip)
+archive from
+the [latest release](https://github.com/delfador/match-scheduler/releases/latest),
+and run the executable for your system from the `bin` directory.
 
 ## Running and configuration
 
