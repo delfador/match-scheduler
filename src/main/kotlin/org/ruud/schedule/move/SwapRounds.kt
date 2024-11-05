@@ -29,5 +29,13 @@ class SwapRounds(
 
             return SwapRounds(round1, round2)
         }
+
+        fun randomAdjacent(
+            numberOfRounds: Int,
+            random: Random = Random,
+        ): SwapRounds {
+            val round1 = random.nextInt(numberOfRounds - 1)
+            return SwapRounds(round1, round1 + 1)
+        }
     }
 }

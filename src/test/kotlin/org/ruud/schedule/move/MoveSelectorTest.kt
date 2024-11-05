@@ -15,7 +15,8 @@ class MoveSelectorTest {
             MoveWeights(
                 swapPlayerWeight = 6.0,
                 rotatePlayersWeight = 1.0,
-                swapRoundWeight = 3.0,
+                swapRoundWeight = 1.5,
+                swapAdjacentRoundWeight = 1.5,
             )
         val moveSelector = moveWeights.toMoveSelector()
 
@@ -28,14 +29,14 @@ class MoveSelectorTest {
 
         assertThat(movesFractions[MoveType.SwapPlayer]).isCloseTo(0.6, within(0.03))
         assertThat(movesFractions[MoveType.RotatePlayers]).isCloseTo(0.1, within(0.03))
-        assertThat(movesFractions[MoveType.SwapRound]).isCloseTo(0.3, within(0.03))
+        assertThat(movesFractions[MoveType.SwapRound]).isCloseTo(0.15 + 0.15, within(0.03))
     }
 
     private fun Move.moveType(): MoveType =
         when (this) {
-            is SwapPlayerPositions -> org.ruud.schedule.move.MoveType.SwapPlayer
-            is RotatePlayers -> org.ruud.schedule.move.MoveType.RotatePlayers
-            is SwapRounds -> org.ruud.schedule.move.MoveType.SwapRound
+            is SwapPlayerPositions -> MoveType.SwapPlayer
+            is RotatePlayers -> MoveType.RotatePlayers
+            is SwapRounds -> MoveType.SwapRound
             else -> throw NotImplementedError("Unknown move type: $this")
         }
 }

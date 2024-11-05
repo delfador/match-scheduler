@@ -7,6 +7,7 @@ enum class MoveType {
     SwapPlayer,
     RotatePlayers,
     SwapRound,
+    SwapAdjacentRound,
     ;
 
     companion object {
@@ -32,6 +33,12 @@ enum class MoveType {
                     )
 
                 SwapRound -> SwapRounds.random(numberOfRounds = schedule.numberOfRounds, random = random)
+
+                SwapAdjacentRound ->
+                    SwapRounds.randomAdjacent(
+                        numberOfRounds = schedule.numberOfRounds,
+                        random = random,
+                    )
             }
     }
 }
