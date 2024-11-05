@@ -1,0 +1,64 @@
+
+PROBLEM
+Number of players: 7
+Number of rounds: 12
+Payers per match: 2
+Playing players per round: 6
+Idle players per round: 1
+Ideal playing streak: 6.00 rounds
+Acceptable playing streak: 5..7 (excluding start/end boundaries)
+Average pair frequency after 12 rounds: 1.71
+
+SCHEDULE
+ 1: [4, 7], [6, 1], [5, 3], [2]
+ 2: [5, 7], [4, 1], [2, 6], [3]
+ 3: [6, 1], [2, 4], [5, 3], [7]
+ 4: [3, 4], [6, 5], [2, 7], [1]
+ 5: [2, 7], [1, 3], [4, 5], [6]
+ 6: [2, 5], [6, 7], [1, 3], [4]
+ 7: [2, 1], [7, 3], [6, 4], [5]
+ 8: [4, 3], [7, 6], [1, 5], [2]
+ 9: [1, 5], [4, 6], [3, 2], [7]
+10: [7, 5], [4, 1], [6, 2], [3]
+11: [4, 2], [5, 6], [7, 3], [1]
+12: [1, 7], [2, 3], [4, 5], [6]
+
+MATCHES PLAYED
+ 1: {1=1, 3=1, 4=1, 5=1, 6=1, 7=1}
+ 2: {1=2, 2=1, 3=1, 4=2, 5=2, 6=2, 7=2}
+ 3: {1=3, 2=2, 3=2, 4=3, 5=3, 6=3, 7=2}
+ 4: {1=3, 2=3, 3=3, 4=4, 5=4, 6=4, 7=3}
+ 5: {1=4, 2=4, 3=4, 4=5, 5=5, 6=4, 7=4}
+ 6: {1=5, 2=5, 3=5, 4=5, 5=6, 6=5, 7=5}
+ 7: {1=6, 2=6, 3=6, 4=6, 5=6, 6=6, 7=6}
+ 8: {1=7, 2=6, 3=7, 4=7, 5=7, 6=7, 7=7}
+ 9: {1=8, 2=7, 3=8, 4=8, 5=8, 6=8, 7=7}
+10: {1=9, 2=8, 3=8, 4=9, 5=9, 6=9, 7=8}
+11: {1=9, 2=9, 3=9, 4=10, 5=10, 6=10, 7=9}
+12: {1=10, 2=10, 3=10, 4=11, 5=11, 6=10, 7=10}
+
+PLAYING STREAKS (excluding start/end boundaries)
+ 1: [6] (min: 6, max: 6)
+ 2: [6] (min: 6, max: 6)
+ 3: [7] (min: 7, max: 7)
+ 4: [] (min: null, max: null)
+ 5: [] (min: null, max: null)
+ 6: [6] (min: 6, max: 6)
+ 7: [5] (min: 5, max: 5)
+
+PAIR FREQUENCY
+1: [(1, 2), (1, 7), (2, 5), (4, 7)]
+2: [(1, 6), (1, 4), (1, 3), (1, 5), (2, 6), (2, 4), (2, 7), (2, 3), (3, 5), (3, 4), (3, 7), (4, 5), (4, 6), (5, 7), (5, 6), (6, 7)]
+
+MATCH FREQUENCY
+1: [[4, 7], [2, 5], [1, 2], [1, 7]]
+2: 16 matches
+
+
+WEIGHTED SUM
+  Total matches played in 10..11     : weight =   6.00, score =   0.0000, weighted score =   0.0000
+  Streaks in 5..7                    : weight =   5.00, score =   0.0000, weighted score =   0.0000
+  Final pair frequency in 1..2       : weight =   1.00, score =   0.0000, weighted score =   0.0000
+
+  TOTAL SCORE: 0.0000
+

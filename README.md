@@ -262,7 +262,7 @@ space by randomly moving to neighboring states (neighbor schedules in our case)
 combined with a probabilistic acceptance criterion that should prevent the
 algorithm from getting stuck in a local optimum.
 
-The objective we are trying to optimizer is focussed on the three
+The objective we are trying to optimize is focussed on the three
 [scheduling goals](#scheduling-goals). Based on the problem's input data
 (number of players, number of rounds, and player per match), the scheduler
 determines a reasonable target for each goal. Any deviation from these targets
@@ -305,6 +305,8 @@ obtained with the match scheduler.
   rounds: [schedule](examples%2Fschedule-10-20.csv), [details](examples%2Fschedule-details-10-20.txt)
 - 10 players, 30
   rounds: [schedule](examples%2Fschedule-10-30.csv), [details](examples%2Fschedule-details-10-30.txt)
+- 7 player, 12 rounds, 2 players per
+  match: [schedule-7-12-2.csv](examples%2Fschedule-7-12-2.csv), [schedule-details-7-12-2.txt](examples%2Fschedule-details-7-12-2.txt)
 
 ## Contributing & feedback
 
