@@ -307,8 +307,7 @@ obtained with the match scheduler.
   rounds: [schedule](examples%2Fschedule-10-20.csv), [details](examples%2Fschedule-details-10-20.txt)
 - 10 players, 30
   rounds: [schedule](examples%2Fschedule-10-30.csv), [details](examples%2Fschedule-details-10-30.txt)
-- 7 player, 12 rounds, 2 players per
-  match: [schedule-7-12-2.csv](examples%2Fschedule-7-12-2.csv), [schedule-details-7-12-2.txt](examples%2Fschedule-details-7-12-2.txt)
+- 7 players, 12 rounds: [schedule](examples%2Fschedule-7-12-2.csv), [details](examples%2Fschedule-details-7-12-2.txt) (2 players per match)
 
 ## Contributing & feedback
 
