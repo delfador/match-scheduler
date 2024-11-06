@@ -23,6 +23,7 @@ class ProblemSolver(
         val schedule: Schedule,
         val score: Double,
         val detailScore: String,
+        val allScores: List<Double>,
     )
 
     private val scorerFactory = BasicScorerFactory(problem, scoringWeights)
@@ -37,9 +38,7 @@ class ProblemSolver(
                 }.map { it.await() }
             }
 
-        val scores = solutions.joinToString(", ") { it.score().toString() }
-        println("Scores: $scores")
-
+        val allScores = solutions.map { it.score() }
         val solution = solutions.minBy { it.score() }
         val schedule = solution.getState()
 
@@ -47,6 +46,7 @@ class ProblemSolver(
             schedule,
             solution.score(),
             solution.detailScore(),
+            allScores,
         )
     }
 

@@ -51,6 +51,7 @@ fun main() {
         }
 
     println(output)
+    println(result.allScores)
     File(options.scheduleCsv).writeText(result.schedule.toCsv())
     File(options.scheduleDetails).writeText(output)
 }
