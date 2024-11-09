@@ -18,6 +18,7 @@ class ProblemSolver(
     private val moveWeights: MoveWeights = MoveWeights(),
     private val annealOptions: AnnealOptions = AnnealOptions(),
     private val random: Random = Random,
+    private val parallelSolvers: Int,
 ) {
     data class Result(
         val schedule: Schedule,
@@ -27,8 +28,6 @@ class ProblemSolver(
     )
 
     private val scorerFactory = BasicScorerFactory(problem, scoringWeights)
-
-    private val parallelSolvers = annealOptions.parallelSolvers
 
     fun solve(): Result {
         val solutions =
