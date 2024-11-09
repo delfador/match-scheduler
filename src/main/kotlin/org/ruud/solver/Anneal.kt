@@ -9,6 +9,12 @@ class Anneal<S, M>(
     private val maxIter: Int,
     private val random: Random = Random,
 ) {
+    private val observers = mutableListOf<Observer>()
+
+    fun addObserver(observer: Observer) {
+        observers.add(observer)
+    }
+
     fun solve(initialSolution: Solution<S, M>): Solution<S, M> {
         val solution = initialSolution.copy()
         var currentScore = solution.score()
@@ -25,6 +31,7 @@ class Anneal<S, M>(
 
             if (acceptMove(newScore, currentScore, temperature)) {
                 currentScore = newScore
+                observers.forEach { it.accept(IterLog(iter, newScore)) }
             } else {
                 solution.undo(move)
             }
