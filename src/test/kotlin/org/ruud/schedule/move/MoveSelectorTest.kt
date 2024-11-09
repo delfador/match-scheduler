@@ -19,7 +19,7 @@ class MoveSelectorTest {
             )
         val moveSelector = moveWeights.toMoveSelector()
 
-        val numberOfMoves = 1_000
+        val numberOfMoves = 10_000
         val movesFractions =
             List(numberOfMoves) { moveSelector.select(schedule) }
                 .groupingBy { it.moveType() }
