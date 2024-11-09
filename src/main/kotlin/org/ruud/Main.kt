@@ -26,7 +26,6 @@ fun main() {
             highDelta = scoringWeights.maximumWeight(),
             lowDelta = scoringWeights.minimumWeight(),
             maxIter = options.maxIter,
-            parallelSolvers = options.parallelSolvers,
         )
 
     val random = options.randomSeed?.let { Random(it) } ?: Random
@@ -38,6 +37,7 @@ fun main() {
             moveWeights = options.moveWeights,
             annealOptions = annealOptions,
             random = random,
+            parallelSolvers = options.parallelSolvers,
         )
 
     val result = solver.solve()

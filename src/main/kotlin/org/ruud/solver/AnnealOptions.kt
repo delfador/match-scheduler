@@ -9,7 +9,6 @@ data class AnnealOptions(
     val initialTemperature: Double = 50.0,
     val coolingRate: Double = 0.9999,
     val maxIter: Int = 100_000,
-    val parallelSolvers: Int = 1,
 ) {
     companion object {
         /**
@@ -26,7 +25,6 @@ data class AnnealOptions(
             highProb: Double = 0.8,
             lowProb: Double = 0.01,
             maxIter: Int = 100_000,
-            parallelSolvers: Int = Runtime.getRuntime().availableProcessors(),
         ): AnnealOptions {
             val initialTemperature = -2 * highDelta / ln(highProb)
 
@@ -41,7 +39,6 @@ data class AnnealOptions(
                 initialTemperature = initialTemperature,
                 coolingRate = coolingRate,
                 maxIter = maxIter,
-                parallelSolvers = parallelSolvers,
             )
         }
     }
