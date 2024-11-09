@@ -32,15 +32,12 @@ fun main() {
 
     val solver =
         ProblemSolver(
-            problem = problem,
             scoringWeights = scoringWeights,
             moveWeights = options.moveWeights,
             annealOptions = annealOptions,
-            random = random,
-            parallelSolvers = options.parallelSolvers,
         )
 
-    val result = solver.solve()
+    val result = solver.solve(problem, random)
 
     val reporter = Reporter(problem)
     val output =
@@ -51,7 +48,7 @@ fun main() {
         }
 
     println(output)
-    println(result.allScores)
+    // println(result.allScores)
     File(options.scheduleCsv).writeText(result.schedule.toCsv())
     File(options.scheduleDetails).writeText(output)
 }
