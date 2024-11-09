@@ -1,3 +1,5 @@
+![build](https://github.com/delfador/match-scheduler/actions/workflows/gradle.yml/badge.svg)
+
 # Match scheduler
 
 If you are faced with the problem of creating an _alternating, multi-round
