@@ -13,8 +13,7 @@ data class AnnealOptions(
     companion object {
         /**
          * Returns [AnnealOptions] that is tuned with the following objective:
-         * - The initial acceptance probability for an increase in objective value equal to twice [highDelta] is
-         * [highProb].
+         * - The initial acceptance probability for an increase in objective value equal to [highDelta] is [highProb].
          * - The final acceptance probability for an increase in objective value equal to [lowDelta] is [lowProb].
          *
          * Assumes a geometric cooling schedule is used for [maxIter] iterations with cooling rate [coolingRate].
@@ -26,7 +25,13 @@ data class AnnealOptions(
             lowProb: Double = 0.01,
             maxIter: Int = 100_000,
         ): AnnealOptions {
-            val initialTemperature = -2 * highDelta / ln(highProb)
+            assert(highDelta > 0.0)
+            assert(lowDelta > 0.0)
+            assert(0.0 < highProb && highProb < 1.0)
+            assert(0.0 < lowProb && lowProb < 1.0)
+            assert(maxIter > 1)
+
+            val initialTemperature = -highDelta / ln(highProb)
 
             val coolingRate =
                 exp(

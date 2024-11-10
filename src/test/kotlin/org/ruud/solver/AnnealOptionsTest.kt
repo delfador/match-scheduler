@@ -25,7 +25,7 @@ class AnnealOptionsTest {
 
         val probability =
             Anneal.acceptanceProbability(
-                newScore = 2 * highDelta,
+                newScore = highDelta,
                 currentScore = 0.0,
                 temperature = annealOptions.initialTemperature,
             )
