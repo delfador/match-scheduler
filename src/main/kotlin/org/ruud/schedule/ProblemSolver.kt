@@ -10,12 +10,12 @@ import org.ruud.solver.ScoreLogger
 import kotlin.random.Random
 
 class ProblemSolver(
+    private val problem: Problem,
     private val scoringWeights: ScoringWeights = ScoringWeights(),
     private val moveWeights: MoveWeights = MoveWeights(),
     private val annealOptions: AnnealOptions = AnnealOptions(),
 ) {
     fun solve(
-        problem: Problem,
         random: Random = Random,
         iterLog: Boolean = false,
     ): Result {

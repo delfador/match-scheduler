@@ -9,8 +9,8 @@ class ProblemSolverTest {
     @Test
     fun `should solve a simple problem`() {
         val problem = Problem(numberOfPlayers = 6, numberOfRounds = 8, playersPerMatch = 4)
-        val problemSolver = ProblemSolver()
-        val result = problemSolver.solve(problem)
+        val problemSolver = ProblemSolver(problem)
+        val result = problemSolver.solve()
 
         val schedule = result.schedule
 
@@ -30,9 +30,10 @@ class ProblemSolverTest {
             List(2) {
                 val solver =
                     ProblemSolver(
+                        problem,
                         annealOptions = AnnealOptions(coolingRate = 0.99, maxIter = 100),
                     )
-                val solution = solver.solve(problem, Random(42))
+                val solution = solver.solve(Random(42))
                 solution.schedule
             }
 
