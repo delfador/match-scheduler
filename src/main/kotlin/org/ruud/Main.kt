@@ -12,10 +12,8 @@ private const val OPTIONS_FILENAME = "options.json"
 
 fun main() {
     println("\nMATCH SCHEDULER")
-    val options =
-        Options
-            .fromFileOrNull(File(OPTIONS_FILENAME)) ?: Options()
-            .withPlayersAndRoundFromUserInput()
+    val defaultOptions = Options.fromFileOrNull(File(OPTIONS_FILENAME)) ?: Options()
+    val options = defaultOptions.withPlayersAndRoundFromUserInput()
 
     println("Solving...")
 
