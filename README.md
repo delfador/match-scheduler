@@ -2,9 +2,9 @@
 
 # Match scheduler
 
-If you are faced with the problem of creating an _alternating, multi-round
-schedule of matches for a group of players including one or more idle players
-per round_, then the **match scheduler** might be just what you are looking for.
+If you need to create an _alternating, multi-round schedule of matches for a
+group of players including one or more idle players per round_, then the **match
+scheduler** might be just what you are looking for.
 
 ## The scheduling task
 
@@ -48,13 +48,14 @@ automate this scheduling process.
 
 The objective of this project is to create a scheduler that is generally
 applicable: can be used for any number of players, number of rounds, and number
-of players per match. Furthermore, the resulting schedule should meet the
-following properties as best as possible.
+of players per match. In addition, the resulting schedule should meet the
+following properties as closely as possible.
 
 1. At the end of all rounds, all players should have played the same number of
    rounds, or, if that's not possible, the number of played matches should
    differ at most by one.
-2. The idle rounds of a player should be nicely spread over all rounds. In other
+2. The idle rounds of a player should be evenly distributed over all 
+   rounds. In other
    words, the length of the playing streaks should all be close to each other.
 3. The number of times each pair of players is participating in the same match
    should be close for all pairs.
@@ -73,7 +74,7 @@ possibility of varying doubles pairs in the latter case.
 
 ## Installation
 
-The scheduler is a console application in build in
+The scheduler is a console application build in
 [Kotlin](https://kotlinlang.org/) and to be able to run the application you will
 need **Java JDK version 21** for your system. If you don't have Java installed,
 you can pick a version [here](https://whichjdk.com/).
@@ -116,10 +117,9 @@ rounds, you'll see something like this.
 
 ```
 MATCH SCHEDULER
-Number of players (10) > 6
-Number of rounds (20) > 12
+Number of players (10)? 6
+Number of rounds (20)? 12
 Solving...
-Scores: 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
 
 PROBLEM
 Number of players: 6
@@ -182,6 +182,14 @@ WEIGHTED SUM
 
   TOTAL SCORE: 0.0000
 ```
+
+Besides the schedule, the output above also gives details about the three main
+goals: number of matches played, streak lengths and pair frequency. If any of
+these measures is outside the desired range, then a penalty score is assigned to
+the solution. A penalty score of 0.0 implies that the goal is fully attained.
+The overall "quality" of the schedule is obtained by computing a weighted sum of
+the three penalty scores.
+
 
 ### Configuration
 
@@ -254,8 +262,8 @@ before the schedule is ready.
 
 ## Algorithm
 
-The following might be a bit technical, but if you're interested in mathematics
-and optimization, please read on!
+For those interested in technical details, this section describes the 
+mathematical optimization algorithm in greater detail.
 
 The match scheduler optimizes the schedule using
 a [simulated annealing](https://en.wikipedia.org/wiki/Simulated_annealing)
@@ -266,7 +274,7 @@ algorithm from getting stuck in a local optimum.
 
 The objective we are trying to optimize is focussed on the three
 [scheduling goals](#scheduling-goals). Based on the problem's input data
-(number of players, number of rounds, and player per match), the scheduler
+(number of players, number of rounds, and players per match), the scheduler
 determines a reasonable target for each goal. Any deviation from these targets
 will be penalized in the objective function.
 
@@ -284,9 +292,10 @@ The probabilistic acceptance criterion is guided by the algorithm's
 _temperature_. Tuning the temperature's cooling schedule and the problem's
 objective function is a crucial, but not straightforward endeavor. The match
 scheduler automatically tunes the cooling schedule, based upon the number of
-iteration and scoring weights. Even with the tuned settings, the algorithm still
-ends up at a local optimum sometimes, which is also why running the algorithm in
-parallel or multiple times might yield a better solution.
+iterations and scoring weights. Even with the tuned settings, the algorithm can
+still end up at a local optimum sometimes. That's why it is generally a
+good idea to run the algorithm multiple times and/or in parallel, because it
+might yield a better solution.
 
 ## Examples
 
@@ -308,6 +317,10 @@ obtained with the match scheduler.
 - 10 players, 30
   rounds: [schedule](examples%2Fschedule-10-30.csv), [details](examples%2Fschedule-details-10-30.txt)
 - 7 players, 12 rounds: [schedule](examples%2Fschedule-7-12-2.csv), [details](examples%2Fschedule-details-7-12-2.txt) (2 players per match)
+
+## License
+
+The match scheduler is licensed under the [MIT License](LICENSE).
 
 ## Contributing & feedback
 

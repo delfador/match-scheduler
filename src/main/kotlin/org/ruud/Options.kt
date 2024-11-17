@@ -24,10 +24,10 @@ data class Options(
     val randomSeed: Int? = null,
 ) {
     fun withPlayersAndRoundFromUserInput(): Options {
-        print("Number of players ($numberOfPlayers) > ")
+        print("Number of players ($numberOfPlayers)? ")
         val numberOfPlayers = readln().toIntOrNull() ?: numberOfPlayers
 
-        print("Number of rounds ($numberOfRounds) > ")
+        print("Number of rounds ($numberOfRounds)? ")
         val numberOfRounds = readln().toIntOrNull() ?: numberOfRounds
 
         return this.copy(
